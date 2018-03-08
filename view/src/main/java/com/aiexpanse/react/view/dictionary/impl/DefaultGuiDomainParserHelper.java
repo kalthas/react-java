@@ -45,10 +45,12 @@ public class DefaultGuiDomainParserHelper implements GuiDomainParserHelper {
 
     @Override
     public <W extends Widget> GuiRelationship<W, ?> createRelationship(Field field) {
+        return injector.getInstance(DefaultGuiRelationship.class);
     }
 
     @Override
     public <W extends Widget> GuiItem<W, ?> createItem(Field field) {
+        return injector.getInstance(DefaultGuiItem.class);
     }
 
 }

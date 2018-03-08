@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface GuiPath<F, T> extends Path<F, T, GuiItem<?, T>, GuiRelationship<?, ?>>, Comparable<GuiPath<?, ?>> {
 
+    String PATH_SEP = "/";
+
     @Override
     GuiDomain<F> getStartingDomain();
 

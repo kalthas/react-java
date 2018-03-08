@@ -17,8 +17,18 @@ public interface Widget extends IdentifiedBy<String> {
     String getTitle();
     void setTitle(String title);
 
+    @DDI(name = "Visible")
+    Boolean getVisible();
+    void setVisible(Boolean visible);
+
     @DDR(name = "Gui Domain", endingClass = GuiDomain.class)
     GuiDomain<?> getDomain();
     void setDomain(GuiDomain<?> domain);
+
+    @DDI(name = "Widget Type")
+    WidgetType getWidgetType();
+
+    WidgetContainer getContainer();
+    void setContainer(WidgetContainer widgetContainer);
 
 }
