@@ -28,6 +28,9 @@ public interface Widget extends IdentifiedBy<String> {
     @DDI(name = "Widget Type")
     WidgetType getWidgetType();
 
+    Integer getIndex();
+    void setIndex(Integer index);
+
     WidgetContainer getContainer();
     void setContainer(WidgetContainer widgetContainer);
 

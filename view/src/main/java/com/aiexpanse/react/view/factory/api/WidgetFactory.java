@@ -5,6 +5,7 @@ import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 
 public interface WidgetFactory {
 
-    <W extends Widget> W createWidget(GuiDomain<W> domain);
+    <W extends Widget> W createWidget(Class<W> widgetClass);
+    <W extends Widget> W createWidget(GuiDomain<W> guiDomain);
 
 }

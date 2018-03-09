@@ -10,6 +10,7 @@ public class DefaultWidget implements Widget {
     private String name;
     private String title;
     private Boolean visible;
+    private Integer index;
     private GuiDomain<?> domain;
     private WidgetContainer container;
 
@@ -56,6 +57,16 @@ public class DefaultWidget implements Widget {
     @Override
     public WidgetType getWidgetType() {
         return WidgetType.DEFAULT;
+    }
+
+    @Override
+    public Integer getIndex() {
+        return index;
+    }
+
+    @Override
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     @Override

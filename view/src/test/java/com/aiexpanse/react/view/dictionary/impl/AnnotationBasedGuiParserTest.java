@@ -3,7 +3,8 @@ package com.aiexpanse.react.view.dictionary.impl;
 import com.aiexpanse.TestModule;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiItem;
-import com.aiexpanse.testdomain.DummyView;
+import com.aiexpanse.react.view.dictionary.api.GuiRelationship;
+import com.aiexpanse.testdomain.TestView;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,13 @@ class AnnotationBasedGuiParserTest {
 
     @Test
     void parseDomain() {
-        GuiDomain<DummyView> domain = parser.parseDomain(DummyView.class);
+        GuiDomain<TestView> domain = parser.parseDomain(TestView.class);
         assertNotNull(domain);
-        Collection<GuiItem<DummyView, ?>> allItems = domain.getAllItems();
+        Collection<GuiItem<TestView, ?>> allItems = domain.getAllItems();
         assertEquals(2, allItems.size());
 
+        Collection<GuiRelationship<TestView, ?>> allRelationships = domain.getAllRelationships();
+        assertEquals(2, allRelationships.size());
     }
 
 }

@@ -1,8 +1,10 @@
 package com.aiexpanse.react.view.impl;
 
+import com.aiexpanse.react.view.TypeConfig;
 import com.aiexpanse.react.view.api.Handler;
 import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetContainer;
+import com.aiexpanse.utils.TypeUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,10 +14,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class AbstractWidgetContainer extends DefaultWidget implements WidgetContainer {
 
     private List<Widget> contents = new CopyOnWriteArrayList<>();
+    private Boolean contentsLoaded = false;
     private Boolean eager = eagerDefault();
     private Handler handler;
 
-    abstract protected Set<Class<? extends Widget>> getAcceptedContentTypes();
     protected Boolean eagerDefault() {
         return false;
     }
@@ -28,6 +30,17 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     @Override
     public void setEager(Boolean eager) {
         this.eager = eager;
+    }
+
+
+    @Override
+    public Boolean getContentsLoaded() {
+        return contentsLoaded;
+    }
+
+    @Override
+    public void setContentsLoaded(Boolean contentsLoaded) {
+        this.contentsLoaded = contentsLoaded;
     }
 
     @Override
@@ -72,11 +85,9 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     }
 
     private void checkAcceptance(Widget content) {
-        Set<Class<? extends Widget>> acceptedContentTypes = getAcceptedContentTypes();
-        for (Class<? extends Widget> acceptedContentType : acceptedContentTypes) {
-            if (acceptedContentType.isAssignableFrom(content.getClass())) {
-                return;
-            }
+        Set<Class<? extends Widget>> acceptedContentTypes = TypeConfig.getAcceptableContentTypes(getWidgetType());
+        if (TypeUtils.anySubType(acceptedContentTypes, content.getClass()) != null) {
+            return;
         }
         throw new IllegalArgumentException("Content: " + content + " is not a acceptable type of " + this);
     }

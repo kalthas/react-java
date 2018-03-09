@@ -8,5 +8,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UIWidget {
+
+    String name() default "";
+
     boolean visible() default true;
+
 }

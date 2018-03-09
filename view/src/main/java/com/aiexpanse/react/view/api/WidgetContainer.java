@@ -12,6 +12,9 @@ public interface WidgetContainer extends Widget {
     Boolean getEager();
     void setEager(Boolean eager);
 
+    Boolean getContentsLoaded();
+    void setContentsLoaded(Boolean contentsLoaded);
+
     Collection<Widget> getAllContents();
     void clearAllContents();
 
