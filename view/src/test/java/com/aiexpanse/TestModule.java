@@ -1,6 +1,7 @@
 package com.aiexpanse;
 
 import com.aiexpanse.ioc.guice.ViewModule;
+import com.aiexpanse.ioc.guice.jackson.JacksonModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -29,6 +30,7 @@ public class TestModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        install(new JacksonModule());
         install(new ViewModule());
     }
 

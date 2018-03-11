@@ -11,6 +11,7 @@ public enum WidgetType {
     DEFAULT(Widget.class),
     APPLICATION(Application.class),
     PERSPECTIVE(Perspective.class),
+    VIEW_GROUP(ViewGroup.class),
     VIEW(View.class),
     FORM(Form.class),
     BUTTON(Button.class, true),

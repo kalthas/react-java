@@ -3,12 +3,14 @@ package com.aiexpanse.react.view.dictionary.impl;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiDomainDictionary;
 import com.google.common.base.Strings;
+import com.google.inject.Singleton;
 
 import java.util.Collection;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+@Singleton
 public class DefaultGuiDomainDictionary implements GuiDomainDictionary {
 
     final ConcurrentMap<Class<?>, GuiDomain<?>> domainByClass = new ConcurrentHashMap<>();

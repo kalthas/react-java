@@ -4,13 +4,14 @@ import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetContainer;
 import com.aiexpanse.react.view.api.WidgetType;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
+import com.aiexpanse.react.view.dictionary.api.GuiPath;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class DefaultWidget implements Widget {
 
     private String name;
     private String title;
-    private Boolean visible;
-    private Integer index;
+    private Boolean visible = false;
     private GuiDomain<?> domain;
     private WidgetContainer container;
 
@@ -45,6 +46,7 @@ public class DefaultWidget implements Widget {
     }
 
     @Override
+    @JsonIgnore
     public GuiDomain<?> getDomain() {
         return domain;
     }
@@ -60,16 +62,12 @@ public class DefaultWidget implements Widget {
     }
 
     @Override
-    public Integer getIndex() {
-        return index;
+    public String getUIPath() {
+        return container == null ? getName() : container.getUIPath() + GuiPath.PATH_SEP + getName();
     }
 
     @Override
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
-    @Override
+    @JsonIgnore
     public WidgetContainer getContainer() {
         return container;
     }

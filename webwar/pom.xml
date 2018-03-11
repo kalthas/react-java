@@ -11,5 +11,36 @@
 
     <artifactId>webwar</artifactId>
 
+    <packaging>war</packaging>
+
+
+    <build>
+        <finalName>react-view</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <server>TomcatServer</server>
+                    <path>/rv</path>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.aiexpanse</groupId>
+            <artifactId>view</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aiexpanse</groupId>
+            <artifactId>sample-app</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

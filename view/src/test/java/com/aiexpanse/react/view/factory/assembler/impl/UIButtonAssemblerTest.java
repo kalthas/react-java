@@ -23,7 +23,7 @@ class UIButtonAssemblerTest {
 
     @Test
     void test() {
-        TestView view = widgetFactory.createWidget(TestView.class);
+        TestView view = widgetFactory.createWidget(TestView.class, true);
         assertEquals(Color.DEFAULT, view.button.getColor());
         assertEquals(Color.PRIMARY, view.button2.getColor());
     }

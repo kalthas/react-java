@@ -28,19 +28,29 @@ public class DefaultWidgetFactory implements WidgetFactory {
 
     @Override
     public <W extends Widget> W createWidget(Class<W> widgetClass) {
+        return createWidget(widgetClass, false);
+    }
+
+    @Override
+    public <W extends Widget> W createWidget(Class<W> widgetClass, Boolean forceEager) {
         GuiDomain<W> domain = domainParser.parseDomain(widgetClass);
         if (domain == null) {
             throw new RuntimeException("Cannot find domain for widget class: " + widgetClass);
         }
-        return createWidget(domain);
+        return createWidget(domain, forceEager);
     }
 
     @Override
     public <W extends Widget> W createWidget(GuiDomain<W> guiDomain) {
-        return createWidget(guiDomain, null);
+        return createWidget(guiDomain, null, false);
     }
 
-    private <W extends Widget> W createWidget(GuiDomain<W> guiDomain, GuiRelationship<?, W> relationship) {
+    @Override
+    public <W extends Widget> W createWidget(GuiDomain<W> guiDomain, Boolean forceEager) {
+        return createWidget(guiDomain, null, forceEager);
+    }
+
+    private <W extends Widget> W createWidget(GuiDomain<W> guiDomain, GuiRelationship<?, W> relationship, Boolean forceEager) {
         W widget = injector.getInstance(guiDomain.getDomainClass());
         populatePropertiesFromDomain(guiDomain, widget);
         if (relationship != null) {
@@ -50,17 +60,18 @@ public class DefaultWidgetFactory implements WidgetFactory {
         }
         if (widget instanceof WidgetContainer) {
             WidgetContainer widgetContainer = (WidgetContainer) widget;
-            populateChildrenFromItems(guiDomain, widgetContainer);
-            if (widgetContainer.getEager()) {
+            if (forceEager || widgetContainer.getEager()) {
+                populateChildrenFromItems(guiDomain, widgetContainer);
                 populateChildrenFromRelationships(guiDomain, widgetContainer);
+                widgetContainer.setContentsLoaded(true);
             }
         }
         return widget;
     }
 
-    public <W extends Widget> W createWidget(GuiRelationship<?, W> relationship) {
+    private <W extends Widget> W createWidget(GuiRelationship<?, W> relationship) {
         GuiDomain<W> endingDomain = relationship.getEndingDomain();
-        W widget = createWidget(endingDomain, relationship);
+        W widget = createWidget(endingDomain, relationship, false);
         // TBD: reorder-index and populate event
         return widget;
     }
@@ -87,7 +98,6 @@ public class DefaultWidgetFactory implements WidgetFactory {
             childWidget.setIndex(relationship.getIndex());
             populatePropertiesFromMember(relationship, childWidget, widgetContainer);
         }
-        widgetContainer.setContentsLoaded(true);
     }
 
     private <M extends GuiMember<?, ?>, C extends WidgetContainer> void populatePropertiesFromMember(M member, Widget childWidget, C widgetContainer) {

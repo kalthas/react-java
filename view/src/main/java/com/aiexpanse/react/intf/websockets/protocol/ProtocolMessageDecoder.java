@@ -1,6 +1,6 @@
 package com.aiexpanse.react.intf.websockets.protocol;
 
-import com.aiexpanse.react.intf.websockets.codec.codec.JSONDecoder;
+import com.aiexpanse.react.intf.websockets.codec.JSONDecoder;
 
 public class ProtocolMessageDecoder extends JSONDecoder<ProtocolMessage> {
 

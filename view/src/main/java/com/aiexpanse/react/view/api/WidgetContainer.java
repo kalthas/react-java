@@ -19,10 +19,10 @@ public interface WidgetContainer extends Widget {
     void clearAllContents();
 
     Widget getContent(String name);
+    Widget getContentBySubPath(String subPath);
 
     void add(Widget widget);
-
     Handler getHandler();
-    void setHandler(Handler handler);
 
+    void setHandler(Handler handler);
 }

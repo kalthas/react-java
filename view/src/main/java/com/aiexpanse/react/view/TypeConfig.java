@@ -37,17 +37,20 @@ public class TypeConfig {
     private final Map<Class<? extends Annotation>, Set<Class<?>>> ACCEPTABLE_ANNOTATION_ON_FIELD = new HashMap<>();
     private void initAcceptableAnnotationOnField() {
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIPerspective.class, Sets.newHashSet(Perspective.class));
+        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIViewGroup.class, Sets.newHashSet(ViewGroup.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIView.class, Sets.newHashSet(View.class));
+        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIButton.class, Sets.newHashSet(Button.class));
+        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIForm.class, Sets.newHashSet(Form.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIElement.class, Sets.newHashSet(Element.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIContainer.class, Sets.newHashSet(WidgetContainer.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIWidget.class, Sets.newHashSet(Widget.class));
-        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIButton.class, Sets.newHashSet(Button.class));
     }
 
     private final Map<WidgetType, Set<Class<? extends Widget>>> ACCEPTABLE_CHILD_TYPES = new HashMap<>();
     private void initAcceptableChildTypes() {
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.APPLICATION, Sets.newHashSet(Perspective.class));
-        ACCEPTABLE_CHILD_TYPES.put(WidgetType.PERSPECTIVE, Sets.newHashSet(View.class));
+        ACCEPTABLE_CHILD_TYPES.put(WidgetType.PERSPECTIVE, Sets.newHashSet(View.class, ViewGroup.class));
+        ACCEPTABLE_CHILD_TYPES.put(WidgetType.VIEW_GROUP, Sets.newHashSet(View.class));
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.VIEW, Sets.newHashSet(Element.class, Button.class));
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.FORM, Sets.newHashSet(Field.class));
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.DEFAULT, Sets.newHashSet());

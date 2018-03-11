@@ -30,7 +30,7 @@ public class WebSocketEndPoint {
     private static final String START_TIME = "Start Time";
 
     @Inject
-    ProtocolHandler handler;
+    private ProtocolHandler handler;
 
     @OnOpen
     public void onOpen(Session session) {
@@ -53,7 +53,7 @@ public class WebSocketEndPoint {
         if (t instanceof DecodeException) {
             LOGGER.error("Error decoding incoming message: {}", ((DecodeException)t).getText(), t);
         } else if (t instanceof SocketException) {
-            LOGGER.debug("As long as it's socket exception, there's not much to say...", t);
+            LOGGER.debug("As long as it's socket exception, there's not much to do...", t);
             return;
         } else {
             LOGGER.error("Client WebSocket error: ", t);

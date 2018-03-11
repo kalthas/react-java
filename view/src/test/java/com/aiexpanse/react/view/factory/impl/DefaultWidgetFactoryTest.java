@@ -24,13 +24,18 @@ class DefaultWidgetFactoryTest {
         TestApplication testApplication = widgetFactory.createWidget(TestApplication.class);
         assertEquals(TestApplication.NAME, testApplication.getName());
 
-        assertFalse(testApplication.perspective.getEager());
-        assertFalse(testApplication.perspective.getContentsLoaded());
-        assertNull(testApplication.perspective.view);
+        assertEquals(2, testApplication.perspective.getAllContents().size());
+        assertEquals(1, testApplication.perspective2.getAllContents().size());
+
+        assertTrue(testApplication.perspective.getEager());
+        assertTrue(testApplication.perspective.getContentsLoaded());
+        assertNotNull(testApplication.perspective.view);
+        assertEquals(0, testApplication.perspective.view.getAllContents().size());
 
         assertTrue(testApplication.perspective2.getEager());
         assertTrue(testApplication.perspective2.getContentsLoaded());
         assertNotNull(testApplication.perspective2.view);
+        assertEquals(4, testApplication.perspective2.view.getAllContents().size());
     }
 
 }

@@ -1,7 +1,6 @@
 package com.aiexpanse.testdomain;
 
 import com.aiexpanse.react.view.annotation.UIApplication;
-import com.aiexpanse.react.view.annotation.UIContainer;
 import com.aiexpanse.react.view.annotation.UIPerspective;
 import com.aiexpanse.react.view.impl.DefaultApplication;
 
@@ -14,7 +13,6 @@ public class TestApplication extends DefaultApplication {
     public TestPerspective perspective;
 
     @UIPerspective
-    @UIContainer(eager = true)
-    public TestPerspective perspective2;
+    public TestPerspective2 perspective2;
 
 }

@@ -1,5 +1,8 @@
 package com.aiexpanse.react.intf.websockets.protocol;
 
+import com.aiexpanse.react.view.api.UISession;
+import com.aiexpanse.react.view.api.Widget;
+import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +19,9 @@ public class ProtocolHandler {
 
     private Session session;
 
+    @Inject
+    private UISession uiSession;
+
     public void init(Session session) {
         this.session = session;
     }
@@ -29,25 +35,49 @@ public class ProtocolHandler {
                 break;
             }
             case LOAD: {
+                Object payload = protocolMessage.getPayload();
+                if (payload instanceof String) {
+                    String uiPath = (String) payload;
+                    try {
+                        sendContent(protocolMessage.getId(), uiSession.getWidget(uiPath));
+                    } catch (Exception e) {
+                        String reasonString = "Error getting widget for ui path [" + uiPath + "]";
+                        LOGGER.error(reasonString, e);
+                        sendError(protocolMessage.getId(), reasonString, e);
+                    }
+                } else {
+                    sendContent(null, "payload for load is not string");
+                }
                 break;
             }
         }
         return messageToReturn;
     }
 
-    public void sendData(String id, Object data) throws IOException, EncodeException {
+    public void sendContent(String id, Object data) {
         ProtocolMessage message = new ProtocolMessage(id, MessageType.CONTENT, data);
-        sendMessage(message);
+        try {
+            sendMessage(message);
+        } catch (IOException | EncodeException e) {
+            LOGGER.error("Sending content [id={}] failed: ", id, e);
+            closeSessionSafe();
+        }
     }
 
     public void sendError() throws IOException, EncodeException {
         sendMessage(new ProtocolMessage(null, MessageType.ERROR, null));
     }
 
-    public void sendError(String reasonString) throws IOException, EncodeException {
+    public void sendError(String id, String reasonString, Exception exception) {
         Map<String, Object> reason = new HashMap<>();
         reason.put("Reason", reasonString);
-        sendMessage(new ProtocolMessage(null, MessageType.ERROR, reason));
+        reason.put("Exception", exception);
+        try {
+            sendMessage(new ProtocolMessage(id, MessageType.ERROR, reason));
+        } catch (IOException | EncodeException e) {
+            LOGGER.error("Sending error [id={}] failed: ", id, e);
+            closeSessionSafe();
+        }
     }
 
     public void sessionCleanup() {

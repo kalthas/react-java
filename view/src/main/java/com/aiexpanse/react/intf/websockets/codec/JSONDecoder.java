@@ -1,6 +1,8 @@
-package com.aiexpanse.react.intf.websockets.codec.codec;
+package com.aiexpanse.react.intf.websockets.codec;
 
+import com.aiexpanse.react.intf.websockets.guice.InjectConfigurator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Injector;
 
 import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
@@ -15,10 +17,12 @@ public abstract class JSONDecoder<T> implements Decoder.TextStream<T> {
     private Class<T> _type;
 
     // TODO: check thread-safety
-    private ThreadLocal<ObjectMapper> _mapper = ThreadLocal.withInitial(ObjectMapper::new);
+    private ThreadLocal<ObjectMapper> _mapper = new ThreadLocal<>();
 
     @Override
     public void init(EndpointConfig endpointConfig) {
+        Injector injector = (Injector) endpointConfig.getUserProperties().get(InjectConfigurator.INJECTOR);
+        _mapper.set(injector.getInstance(ObjectMapper.class));
         ParameterizedType clazz = (ParameterizedType)this.getClass().getGenericSuperclass();
         Type type = clazz.getActualTypeArguments()[0];
         if (type instanceof Class) {

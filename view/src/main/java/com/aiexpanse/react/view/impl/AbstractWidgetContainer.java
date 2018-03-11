@@ -1,10 +1,13 @@
 package com.aiexpanse.react.view.impl;
 
+import com.aiexpanse.lang.Pair;
 import com.aiexpanse.react.view.TypeConfig;
 import com.aiexpanse.react.view.api.Handler;
 import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetContainer;
+import com.aiexpanse.react.view.utils.UIPathUtils;
 import com.aiexpanse.utils.TypeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Collection;
 import java.util.List;
@@ -64,6 +67,22 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     }
 
     @Override
+    public Widget getContentBySubPath(String subPath) {
+        Pair<String, String> pair = UIPathUtils.split(subPath);
+        Widget content = getContent(pair.getLeft());
+        if (content != null) {
+            if (pair.getRight() != null) {
+                if (content instanceof WidgetContainer) {
+                    return ((WidgetContainer)content).getContentBySubPath(pair.getRight());
+                }
+                return null;
+            }
+            return content;
+        }
+        return null;
+    }
+
+    @Override
     public void add(Widget content) {
         checkAcceptance(content);
         checkNonExistence(content);
@@ -72,6 +91,7 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     }
 
     @Override
+    @JsonIgnore
     public Handler getHandler() {
         return handler;
     }
@@ -89,7 +109,7 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
         if (TypeUtils.anySubType(acceptedContentTypes, content.getClass()) != null) {
             return;
         }
-        throw new IllegalArgumentException("Content: " + content + " is not a acceptable type of " + this);
+        throw new IllegalArgumentException("Content: " + content + " is not an acceptable type of " + this);
     }
 
     private void checkNonExistence(Widget content) {
