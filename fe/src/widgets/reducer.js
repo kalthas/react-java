@@ -2,14 +2,7 @@ import { combineReducers } from 'redux-immutable';
 import { Map } from 'immutable';
 
 import applicationReducer from './app/reducer';
-import ViewContainerRecord from "../records/ViewContainer";
-
-const viewContainerReducer = (state = new ViewContainerRecord(), action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-};
+import viewContainerReducer from "./viewcontainer/reducer";
 
 const viewsReducer = (state = new Map(), action) => {
     switch (action.type) {

@@ -9,15 +9,15 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import Drawer from 'material-ui/Drawer';
 import {
-    Route,
-    Switch
-} from 'react-router-dom';
+    Route
+} from "react-router-dom";
 
 import NavTree from '../navtree/NavTree';
 import MetaStore from "../../MetaStore";
 import {getRoot} from "../../utils/PathUtils";
+import ViewContainer from "../viewcontainer/ViewContainer";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const styles = theme => ({
     flex: {
@@ -36,8 +36,8 @@ const styles = theme => ({
     },
     drawerPaper: {
         position: 'relative',
-        marginTop: 56,
-        height: 'calc(100% - 56px)',
+        marginTop: 64,
+        height: 'calc(100% - 64px)',
         width: drawerWidth
     },
     drawerInner: {
@@ -83,16 +83,12 @@ const styles = theme => ({
 class AppMain extends PureComponent {
 
     state = {
-        drawerOpen: false
+        drawerOpen: true
     };
 
     componentDidMount() {
         MetaStore.load(this.props.match.url.substr(1));
     }
-
-    handleDrawerOpen = () => {
-        this.setState({drawerOpen: true});
-    };
 
     handleDrawerToggle = () => {
         this.setState(preState => ({
@@ -135,7 +131,7 @@ class AppMain extends PureComponent {
                         open={drawerOpen}
                     >
                         <div className={classes.drawerInner}>
-                            <NavTree/>
+                            <NavTree />
                         </div>
                     </Drawer>
                 }
@@ -145,9 +141,11 @@ class AppMain extends PureComponent {
                     })}
                 >
                     <div className={classes.contentInner}>
-                        <Switch>
-                            <Route path={`${match.path}/:perspectiveName`} component={(props)=><div>{props.match.path}</div>} />
-                        </Switch>
+                        <Route path={match.url} component={ViewContainer} />
+                        {/*<Route*/}
+                            {/*path={match.url}*/}
+                            {/*render={() => <h3>Please select a topic.</h3>}*/}
+                        {/*/>*/}
                     </div>
                 </main>
             </div>

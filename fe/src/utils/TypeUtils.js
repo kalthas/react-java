@@ -1,0 +1,1 @@
+export const isNonEmptyArray = (array) => (Array.isArray(array) && (array.length > 0));

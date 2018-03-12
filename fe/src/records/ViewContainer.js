@@ -1,9 +1,8 @@
-import { Record, List } from 'immutable';
+import { Record } from 'immutable';
 
 
 const ViewContainerProps = {
-    activeView: "",
-    views: new List()
+    activeView: ""
 };
 
 const ViewContainerRecord = new Record(ViewContainerProps);
