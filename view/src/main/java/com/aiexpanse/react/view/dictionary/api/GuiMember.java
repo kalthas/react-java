@@ -2,7 +2,7 @@ package com.aiexpanse.react.view.dictionary.api;
 
 import com.aiexpanse.dictionary.api.DDD;
 import com.aiexpanse.dictionary.api.Member;
-import com.aiexpanse.react.view.annotation.UIAnnotation;
+import com.aiexpanse.react.view.factory.api.UIAnnotation;
 
 import java.lang.reflect.Field;
 import java.util.List;

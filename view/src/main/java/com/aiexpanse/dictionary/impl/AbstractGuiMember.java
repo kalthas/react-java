@@ -1,6 +1,6 @@
 package com.aiexpanse.dictionary.impl;
 
-import com.aiexpanse.react.view.annotation.UIAnnotation;
+import com.aiexpanse.react.view.factory.api.UIAnnotation;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiMember;
 import com.aiexpanse.react.view.dictionary.api.GuiPath;

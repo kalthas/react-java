@@ -2,11 +2,9 @@ package com.aiexpanse.react.view;
 
 import com.aiexpanse.react.view.annotation.*;
 import com.aiexpanse.react.view.api.*;
+import com.aiexpanse.react.view.factory.api.UIAnnotation;
 import com.aiexpanse.react.view.factory.assembler.api.Assembler;
-import com.aiexpanse.react.view.factory.assembler.impl.NoOpAssembler;
-import com.aiexpanse.react.view.factory.assembler.impl.UIApplicationAssembler;
-import com.aiexpanse.react.view.factory.assembler.impl.UIButtonAssembler;
-import com.aiexpanse.react.view.factory.assembler.impl.UIContainerAssembler;
+import com.aiexpanse.react.view.factory.assembler.impl.*;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -61,6 +59,7 @@ public class TypeConfig {
         ASSEMBLER_BY_CLASS.put(UIApplication.class, injector.getInstance(UIApplicationAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIButton.class, injector.getInstance(UIButtonAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIContainer.class, injector.getInstance(UIContainerAssembler.class));
+        ASSEMBLER_BY_CLASS.put(UIWidget.class, injector.getInstance(UIWidgetAssembler.class));
     }
 
     public static Set<Class<?>> getCandidateTypesOfFieldAnnotation(Class<? extends Annotation> annType) {

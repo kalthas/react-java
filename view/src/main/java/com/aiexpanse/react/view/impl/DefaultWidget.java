@@ -6,6 +6,7 @@ import com.aiexpanse.react.view.api.WidgetType;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiPath;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.Strings;
 
 public class DefaultWidget implements Widget {
 
@@ -27,7 +28,7 @@ public class DefaultWidget implements Widget {
 
     @Override
     public String getTitle() {
-        return title;
+        return Strings.isNullOrEmpty(title) ? name : title;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.aiexpanse.react.view.dictionary.impl;
 
 import com.aiexpanse.react.view.TypeConfig;
-import com.aiexpanse.react.view.annotation.UIAnnotation;
+import com.aiexpanse.react.view.factory.api.UIAnnotation;
 import com.aiexpanse.react.view.annotation.UIApplication;
 import com.aiexpanse.react.view.api.Application;
 import com.aiexpanse.react.view.api.Widget;

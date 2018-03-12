@@ -1,4 +1,4 @@
-package com.aiexpanse.react.view.annotation;
+package com.aiexpanse.react.view.factory.api;
 
 import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.factory.assembler.api.Assembler;

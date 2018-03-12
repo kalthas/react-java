@@ -87,7 +87,6 @@ public class DefaultWidgetFactory implements WidgetFactory {
     private <W extends Widget, C extends WidgetContainer> void populateChildrenFromItems(GuiDomain<W> guiDomain, C widgetContainer) {
         guiDomain.getAllItems().forEach(item -> {
             Widget childWidget = (Widget)injector.getInstance(item.getType());
-            childWidget.setIndex(item.getIndex());
             populatePropertiesFromMember(item, childWidget, widgetContainer);
         });
     }
@@ -95,7 +94,6 @@ public class DefaultWidgetFactory implements WidgetFactory {
     private <W extends Widget, C extends WidgetContainer> void populateChildrenFromRelationships(GuiDomain<W> guiDomain, C widgetContainer) {
         for (GuiRelationship relationship : guiDomain.getAllRelationships()) {
             Widget childWidget = createWidget(relationship);
-            childWidget.setIndex(relationship.getIndex());
             populatePropertiesFromMember(relationship, childWidget, widgetContainer);
         }
     }

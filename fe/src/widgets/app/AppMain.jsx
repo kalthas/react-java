@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
@@ -13,8 +13,9 @@ import {
     Switch
 } from 'react-router-dom';
 
-import MetaStore from "../ws/MetaStore";
-import {getRoot} from "../utils/PathUtils";
+import NavTree from '../navtree/NavTree';
+import MetaStore from "../../MetaStore";
+import {getRoot} from "../../utils/PathUtils";
 
 const drawerWidth = 240;
 
@@ -79,14 +80,14 @@ const styles = theme => ({
 });
 
 
-class AppMain extends Component {
+class AppMain extends PureComponent {
 
     state = {
         drawerOpen: false
     };
 
     componentDidMount() {
-        MetaStore.load(this.props.match.url.substr(1), ()=>null);
+        MetaStore.load(this.props.match.url.substr(1));
     }
 
     handleDrawerOpen = () => {
@@ -134,7 +135,7 @@ class AppMain extends Component {
                         open={drawerOpen}
                     >
                         <div className={classes.drawerInner}>
-                            {/*<Sidebar onExpand={this.handleDrawerOpen}/>*/}
+                            <NavTree/>
                         </div>
                     </Drawer>
                 }
