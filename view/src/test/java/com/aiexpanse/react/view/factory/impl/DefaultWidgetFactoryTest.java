@@ -33,7 +33,7 @@ class DefaultWidgetFactoryTest {
         assertNotNull(testApplication.perspective.view);
         assertEquals(0, testApplication.perspective.view.getAllContents().size());
 
-        assertEquals(TestPerspective2.TITLE, testApplication.perspective2.getTitle());
+        assertEquals(TestPerspective2.TITLE, testApplication.perspective2.getDisplayName());
         assertTrue(testApplication.perspective2.getEager());
         assertTrue(testApplication.perspective2.getContentsLoaded());
         assertNotNull(testApplication.perspective2.view);

@@ -52,7 +52,7 @@ public class TypeConfig {
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.PERSPECTIVE, Sets.newHashSet(View.class, ViewGroup.class));
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.VIEW_GROUP, Sets.newHashSet(View.class));
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.VIEW, Sets.newHashSet(Element.class, Button.class));
-        ACCEPTABLE_CHILD_TYPES.put(WidgetType.FORM, Sets.newHashSet(Field.class));
+        ACCEPTABLE_CHILD_TYPES.put(WidgetType.FORM, Sets.newHashSet(Field.class, Button.class));
         ACCEPTABLE_CHILD_TYPES.put(WidgetType.DEFAULT, Sets.newHashSet());
     }
 
@@ -97,7 +97,7 @@ public class TypeConfig {
                 assembler = DEFAULT_ASSEMBLER;
             }
             Assembler fieldAssembler = getFieldAssembler(annotation.annotationType());
-            new UIAnnotation(annotation, assembler, fieldAssembler);
+            return new UIAnnotation(annotation, assembler, fieldAssembler);
         }
         return null;
     }

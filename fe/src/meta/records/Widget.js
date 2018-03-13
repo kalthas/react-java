@@ -14,7 +14,7 @@ const WidgetProps = Object.assign(
     IdentifiableProps,
     {
         name: "",
-        title: null,
+        displayName: null,
         visible: false,
         widgetType: DEFAULT,
 

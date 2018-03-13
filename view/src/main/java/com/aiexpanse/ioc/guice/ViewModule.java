@@ -1,7 +1,6 @@
 package com.aiexpanse.ioc.guice;
 
-import com.aiexpanse.react.view.api.UIService;
-import com.aiexpanse.react.view.api.UISession;
+import com.aiexpanse.react.view.api.*;
 import com.aiexpanse.react.view.dictionary.api.GuiDomainDictionary;
 import com.aiexpanse.react.view.dictionary.api.GuiDomainParser;
 import com.aiexpanse.react.view.dictionary.api.GuiDomainParserHelper;
@@ -12,8 +11,7 @@ import com.aiexpanse.react.view.factory.api.WidgetFactory;
 import com.aiexpanse.react.view.factory.checker.api.WidgetClassChecker;
 import com.aiexpanse.react.view.factory.checker.impl.DefaultWidgetClassChecker;
 import com.aiexpanse.react.view.factory.impl.DefaultWidgetFactory;
-import com.aiexpanse.react.view.impl.DefaultUIService;
-import com.aiexpanse.react.view.impl.DefaultUISession;
+import com.aiexpanse.react.view.impl.*;
 import com.google.inject.AbstractModule;
 
 public class ViewModule extends AbstractModule {
@@ -27,6 +25,14 @@ public class ViewModule extends AbstractModule {
         bind(WidgetFactory.class).to(DefaultWidgetFactory.class);
         bind(UIService.class).to(DefaultUIService.class);
         bind(UISession.class).to(DefaultUISession.class);
+
+        bind(Application.class).to(DefaultApplication.class);
+        bind(Perspective.class).to(DefaultPerspective.class);
+        bind(ViewGroup.class).to(DefaultViewGroup.class);
+        bind(View.class).to(DefaultView.class);
+        bind(Form.class).to(DefaultForm.class);
+        bind(Button.class).to(DefaultButton.class);
+        bind(Field.class).to(DefaultField.class);
     }
 
 }

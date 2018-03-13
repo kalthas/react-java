@@ -7,7 +7,7 @@ import com.aiexpanse.react.view.impl.DefaultViewGroup;
 public class Forms extends DefaultViewGroup {
 
     @UIView
-    @UIWidget(title = "Sign In Form")
+    @UIWidget(displayName = "Sign In Form")
     public SignInFormView signInFormView;
 
 }

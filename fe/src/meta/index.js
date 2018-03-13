@@ -6,13 +6,17 @@ import {RecordStatus} from "./records/Widget";
 import {isNonEmptyArray} from "../utils/TypeUtils";
 import {VIEW} from "../constants/WidgetType";
 import FormRecord, {FormProps} from "./records/Form";
+import FieldRecord, {FieldProps, FieldType} from "./records/Field";
+import ButtonRecord, {ButtonProps} from "./records/Button";
 
 const Meta = [
     [ApplicationRecord, ApplicationProps],
     [PerspectiveRecord, PerspectiveProps],
     [ViewGroupRecord, ViewGroupProps],
     [ViewRecord, ViewProps],
-    [FormRecord, FormProps]
+    [FormRecord, FormProps],
+    [FieldRecord, FieldProps],
+    [ButtonRecord, ButtonProps]
 ];
 const TypeMetaMap = Meta.reduce((accumulator, cur) => {
     accumulator[cur[1].widgetType] = cur; return accumulator;
@@ -121,6 +125,10 @@ export {
     PerspectiveRecord,
     ViewGroupRecord,
     ViewRecord,
+    FormRecord,
+    FieldRecord,
+    ButtonRecord,
+    FieldType,
 
     isContentsLoaded
 }

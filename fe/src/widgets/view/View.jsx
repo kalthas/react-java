@@ -2,23 +2,17 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {withStyles} from "material-ui/styles/index";
-import {CircularProgress} from "material-ui/Progress";
 
 import {getView} from "./selectors";
 import {EMPTY_LIST} from "../../constants/Pool";
-import {getWidgetClass} from "../index";
+import {createWidget} from "../index";
 import {isAppLoaded} from "../app/selectors";
 import {isContentsLoaded} from "../../meta/index";
 import MetaStore from "../../meta/MetaStore";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 
 const styles = theme => ({
-    progressContainer: {
-        height: 44 + theme.spacing.unit * 4,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
 });
 class View extends PureComponent {
 
@@ -33,14 +27,9 @@ class View extends PureComponent {
         let result;
         if (view && isAppLoaded) {
             if (isContentsLoaded(view)) {
-                result = (view.allContents || EMPTY_LIST).map(content => {
-                    const WidgetClass = getWidgetClass(content.widgetType);
-                    return <WidgetClass key={content.uipath} uipath={content.uipath} />
-                });
+                result = (view.allContents || EMPTY_LIST).map(createWidget);
             } else {
-                result = <div className={classes.progressContainer}>
-                    <CircularProgress/>
-                </div>
+                result = <LoadingIndicator />
             }
         } else {
             result = null;

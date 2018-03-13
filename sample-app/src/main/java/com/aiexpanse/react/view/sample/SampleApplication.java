@@ -10,7 +10,7 @@ import com.aiexpanse.react.view.sample.gallery.ui.GalleryPerspective;
 public class SampleApplication extends DefaultApplication {
 
     @UIPerspective
-    @UIWidget(title = "Gallery")
+    @UIWidget(displayName = "Gallery")
     public GalleryPerspective galleryPerspective;
 
 }

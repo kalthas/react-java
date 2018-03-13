@@ -22,7 +22,7 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     private Handler handler;
 
     protected Boolean eagerDefault() {
-        return false;
+        return true;
     }
 
     @Override

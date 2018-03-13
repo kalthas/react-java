@@ -7,11 +7,11 @@ import {isNonEmptyArray} from "../../utils/TypeUtils";
 const widgetRecordToNode = (record) => (
     isNonEmptyArray(record.allContents) ? {
         key: record.uipath,
-        text: record.title,
+        text: record.displayName,
         children: record.allContents.map(widgetRecordToNode)
     } : {
         key: record.uipath,
-        text: record.title
+        text: record.displayName
     }
 );
 

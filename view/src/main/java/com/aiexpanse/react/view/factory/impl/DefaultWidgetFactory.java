@@ -64,12 +64,15 @@ public class DefaultWidgetFactory implements WidgetFactory {
         populatePropertiesFromDomain(guiDomain, widget);
         if (relationship != null) {
             relationship.getUIAnnotations().forEach(uiAnnotation -> {
-                uiAnnotation.populate(widget);
+                uiAnnotation.populate(widget, null);
             });
         }
         if (widget instanceof WidgetContainer) {
             WidgetContainer widgetContainer = (WidgetContainer) widget;
-            if (forceEager || widgetContainer.getEager()) {
+            if (forceEager) {
+                widgetContainer.setEager(true);
+            }
+            if (widgetContainer.getEager()) {
                 createContents(widgetContainer);
             }
         }
@@ -87,7 +90,7 @@ public class DefaultWidgetFactory implements WidgetFactory {
         widget.setName(guiDomain.getName());
         widget.setDomain(guiDomain);
         guiDomain.getUIAnnotations().forEach(uiAnnotation -> {
-            uiAnnotation.populate(widget);
+            uiAnnotation.populate(widget, null);
         });
     }
 
@@ -108,7 +111,7 @@ public class DefaultWidgetFactory implements WidgetFactory {
     private <M extends GuiMember<?, ?>, C extends WidgetContainer> void populatePropertiesFromMember(M member, Widget childWidget, C widgetContainer) {
         addWidgetToParent(member, childWidget, widgetContainer);
         member.getUIAnnotations().forEach(uiAnnotation -> {
-            uiAnnotation.populate(childWidget);
+            uiAnnotation.populate(childWidget, member.getDeclaredField());
         });
     }
 

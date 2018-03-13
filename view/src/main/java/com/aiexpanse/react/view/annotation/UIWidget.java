@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UIWidget {
 
-    String title() default "";
+    String displayName() default "";
 
     boolean visible() default true;
 

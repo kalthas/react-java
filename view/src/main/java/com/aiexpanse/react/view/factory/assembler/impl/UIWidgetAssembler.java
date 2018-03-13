@@ -10,8 +10,9 @@ public class UIWidgetAssembler<W extends Widget> extends AbstractAssembler<UIWid
 
     @Override
     public void populate(UIWidget uiWidget, W widget) {
-        if (!Strings.isNullOrEmpty(uiWidget.title())) {
-            widget.setTitle(uiWidget.title());
+        widget.setVisible(uiWidget.visible());
+        if (!Strings.isNullOrEmpty(uiWidget.displayName())) {
+            widget.setDisplayName(uiWidget.displayName());
         }
     }
 

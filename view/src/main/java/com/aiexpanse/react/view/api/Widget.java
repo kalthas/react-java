@@ -13,9 +13,9 @@ public interface Widget extends IdentifiedBy<String> {
     String getName();
     void setName(String name);
 
-    @DDI(name = "Title")
-    String getTitle();
-    void setTitle(String title);
+    @DDI(name = "Display Name")
+    String getDisplayName();
+    void setDisplayName(String displayName);
 
     @DDI(name = "Visible")
     Boolean getVisible();

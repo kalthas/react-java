@@ -5,14 +5,16 @@ import com.aiexpanse.react.view.api.WidgetContainer;
 import com.aiexpanse.react.view.api.WidgetType;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiPath;
+import com.aiexpanse.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Strings;
 
 public class DefaultWidget implements Widget {
 
     private String name;
-    private String title;
-    private Boolean visible = false;
+    private String displayName;
+    private String capitalizedName;
+    private Boolean visible = true;
     private GuiDomain<? extends Widget> domain;
     private WidgetContainer container;
 
@@ -27,13 +29,17 @@ public class DefaultWidget implements Widget {
     }
 
     @Override
-    public String getTitle() {
-        return Strings.isNullOrEmpty(title) ? name : title;
+    public String getDisplayName() {
+        return Strings.isNullOrEmpty(displayName) ?
+                ( capitalizedName == null ?
+                        (capitalizedName = StringUtils.capitalize(name)) :
+                        capitalizedName ) :
+                displayName ;
     }
 
     @Override
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class TestApplication extends DefaultApplication {
     public TestPerspective perspective;
 
     @UIPerspective
-    @UIWidget(title = TestPerspective2.TITLE)
+    @UIWidget(displayName = TestPerspective2.TITLE)
     public TestPerspective2 perspective2;
 
 }
