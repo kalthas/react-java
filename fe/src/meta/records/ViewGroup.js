@@ -1,7 +1,7 @@
 import { Record } from 'immutable';
 
 import WidgetContainerProps from "./WidgetContainer";
-import {VIEW_GROUP} from "../constants/WidgetType";
+import {VIEW_GROUP} from "../../constants/WidgetType";
 
 const ViewGroupProps = Object.assign(
     {},

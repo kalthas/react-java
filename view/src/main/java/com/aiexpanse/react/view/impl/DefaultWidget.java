@@ -13,7 +13,7 @@ public class DefaultWidget implements Widget {
     private String name;
     private String title;
     private Boolean visible = false;
-    private GuiDomain<?> domain;
+    private GuiDomain<? extends Widget> domain;
     private WidgetContainer container;
 
     @Override
@@ -48,12 +48,12 @@ public class DefaultWidget implements Widget {
 
     @Override
     @JsonIgnore
-    public GuiDomain<?> getDomain() {
+    public GuiDomain<? extends Widget> getDomain() {
         return domain;
     }
 
     @Override
-    public void setDomain(GuiDomain<?> domain) {
+    public void setDomain(GuiDomain<? extends Widget> domain) {
         this.domain = domain;
     }
 

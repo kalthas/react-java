@@ -50,6 +50,15 @@ public class DefaultWidgetFactory implements WidgetFactory {
         return createWidget(guiDomain, null, forceEager);
     }
 
+    @Override
+    public <C extends WidgetContainer> C createContents(C widgetContainer) {
+        GuiDomain<? extends Widget> guiDomain = widgetContainer.getDomain();
+        populateChildrenFromItems(guiDomain, widgetContainer);
+        populateChildrenFromRelationships(guiDomain, widgetContainer);
+        widgetContainer.setContentsLoaded(true);
+        return widgetContainer;
+    }
+
     private <W extends Widget> W createWidget(GuiDomain<W> guiDomain, GuiRelationship<?, W> relationship, Boolean forceEager) {
         W widget = injector.getInstance(guiDomain.getDomainClass());
         populatePropertiesFromDomain(guiDomain, widget);
@@ -61,9 +70,7 @@ public class DefaultWidgetFactory implements WidgetFactory {
         if (widget instanceof WidgetContainer) {
             WidgetContainer widgetContainer = (WidgetContainer) widget;
             if (forceEager || widgetContainer.getEager()) {
-                populateChildrenFromItems(guiDomain, widgetContainer);
-                populateChildrenFromRelationships(guiDomain, widgetContainer);
-                widgetContainer.setContentsLoaded(true);
+                createContents(widgetContainer);
             }
         }
         return widget;

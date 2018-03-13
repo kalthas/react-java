@@ -8,14 +8,11 @@ import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import Drawer from 'material-ui/Drawer';
-import {
-    Route
-} from "react-router-dom";
 
 import NavTree from '../navtree/NavTree';
-import MetaStore from "../../MetaStore";
-import {getRoot} from "../../utils/PathUtils";
-import ViewContainer from "../viewcontainer/ViewContainer";
+import MetaStore from "../../meta/MetaStore";
+import {getRootName} from "../../utils/PathUtils";
+import ViewContainer from "../view/ViewContainer";
 
 const drawerWidth = 300;
 
@@ -36,8 +33,12 @@ const styles = theme => ({
     },
     drawerPaper: {
         position: 'relative',
-        marginTop: 64,
-        height: 'calc(100% - 64px)',
+        marginTop: 56,
+        height: 'calc(100% - 56px)',
+        [theme.breakpoints.up('sm')]: {
+            marginTop: 64,
+            height: 'calc(100% - 64px)',
+        },
         width: drawerWidth
     },
     drawerInner: {
@@ -87,7 +88,7 @@ class AppMain extends PureComponent {
     };
 
     componentDidMount() {
-        MetaStore.load(this.props.match.url.substr(1));
+        MetaStore.load(this.props.match.url);
     }
 
     handleDrawerToggle = () => {
@@ -117,7 +118,7 @@ class AppMain extends PureComponent {
                             </IconButton>
                         }
                         <Typography variant="title" color="inherit" noWrap className={classes.flex}>
-                            {getRoot(match.url)}
+                            {getRootName(match.url)}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -141,11 +142,7 @@ class AppMain extends PureComponent {
                     })}
                 >
                     <div className={classes.contentInner}>
-                        <Route path={match.url} component={ViewContainer} />
-                        {/*<Route*/}
-                            {/*path={match.url}*/}
-                            {/*render={() => <h3>Please select a topic.</h3>}*/}
-                        {/*/>*/}
+                        <ViewContainer matchingPath={this.props.history.location.pathname}/>
                     </div>
                 </main>
             </div>

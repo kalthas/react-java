@@ -28,6 +28,7 @@ public class TypeConfig {
         initAcceptableAnnotationOnField();
         initAcceptableChildTypes();
         initAssemblerByClass(injector);
+        initFieldAssemblerByClass(injector);
         ALL_UI_ANNOTATIONS = ACCEPTABLE_ANNOTATION_ON_FIELD.keySet();
         SELF.compareAndSet(null, this);
     }
@@ -40,6 +41,7 @@ public class TypeConfig {
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIButton.class, Sets.newHashSet(Button.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIForm.class, Sets.newHashSet(Form.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIElement.class, Sets.newHashSet(Element.class));
+        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIField.class, Sets.newHashSet(Field.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIContainer.class, Sets.newHashSet(WidgetContainer.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIWidget.class, Sets.newHashSet(Widget.class));
     }
@@ -58,8 +60,13 @@ public class TypeConfig {
     private void initAssemblerByClass(Injector injector) {
         ASSEMBLER_BY_CLASS.put(UIApplication.class, injector.getInstance(UIApplicationAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIButton.class, injector.getInstance(UIButtonAssembler.class));
+        ASSEMBLER_BY_CLASS.put(UIField.class, injector.getInstance(UIFieldAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIContainer.class, injector.getInstance(UIContainerAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIWidget.class, injector.getInstance(UIWidgetAssembler.class));
+    }
+    private final Map<Class<? extends Annotation>, Assembler> FIELD_ASSEMBLER_BY_CLASS = new HashMap<>();
+    private void initFieldAssemblerByClass(Injector injector) {
+        FIELD_ASSEMBLER_BY_CLASS.put(UIField.class, injector.getInstance(UIFieldFieldAssembler.class));
     }
 
     public static Set<Class<?>> getCandidateTypesOfFieldAnnotation(Class<? extends Annotation> annType) {
@@ -78,6 +85,10 @@ public class TypeConfig {
         return SELF.get().ASSEMBLER_BY_CLASS.get(annotationClass);
     }
 
+    public static Assembler getFieldAssembler(Class<? extends Annotation> annotationClass) {
+        return SELF.get().FIELD_ASSEMBLER_BY_CLASS.get(annotationClass);
+    }
+
     public static UIAnnotation getUIAnnotation(Annotation annotation) {
         TypeConfig typeConfig = SELF.get();
         if (typeConfig.ALL_UI_ANNOTATIONS.contains(annotation.annotationType())) {
@@ -85,7 +96,8 @@ public class TypeConfig {
             if (assembler == null) {
                 assembler = DEFAULT_ASSEMBLER;
             }
-            return new UIAnnotation(annotation, assembler);
+            Assembler fieldAssembler = getFieldAssembler(annotation.annotationType());
+            new UIAnnotation(annotation, assembler, fieldAssembler);
         }
         return null;
     }

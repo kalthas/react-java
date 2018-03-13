@@ -39,7 +39,7 @@ public class ProtocolHandler {
                 if (payload instanceof String) {
                     String uiPath = (String) payload;
                     try {
-                        sendContent(protocolMessage.getId(), uiSession.getWidget(uiPath));
+                        sendContent(protocolMessage.getId(), uiSession.loadWidget(uiPath));
                     } catch (Exception e) {
                         String reasonString = "Error getting widget for ui path [" + uiPath + "]";
                         LOGGER.error(reasonString, e);

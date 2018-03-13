@@ -10,6 +10,14 @@ public interface UISession extends IdentifiedBy<String> {
 
     AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
+    /*
+     * get widget according to ui path, create one if not exists yet
+     */
     Widget getWidget(String uiPath);
+
+    /*
+     * similar as getWidget, instead loadWidget will make sure return widget has contents loaded
+     */
+    Widget loadWidget(String uiPath);
 
 }

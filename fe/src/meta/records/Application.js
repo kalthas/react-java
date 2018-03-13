@@ -1,7 +1,7 @@
 import { Record } from 'immutable';
 
 import WidgetContainerProps from "./WidgetContainer";
-import {APPLICATION} from "../constants/WidgetType";
+import {APPLICATION} from "../../constants/WidgetType";
 
 const ApplicationProps = Object.assign(
     {},

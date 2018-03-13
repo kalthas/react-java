@@ -1,7 +1,7 @@
 import { Record } from 'immutable';
 
 import WidgetContainerProps from "./WidgetContainer";
-import {PERSPECTIVE} from "../constants/WidgetType";
+import {PERSPECTIVE} from "../../constants/WidgetType";
 
 const PerspectiveProps = Object.assign(
     {},

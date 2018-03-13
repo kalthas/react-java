@@ -11,10 +11,23 @@ public final class UIPathUtils {
         // prevent construction
     }
 
+    /*
+     * Root part of the ui path, say for /someApp it's /someApp, but
+     * for /someApp/p1 it's /someApp
+     */
     public static String getRootUIPath(String uiPath) {
         Objects.requireNonNull(uiPath, "cannot get root uiPath from null");
-        int i = uiPath.indexOf(GuiPath.PATH_SEP);
+        int i = uiPath.indexOf(GuiPath.PATH_SEP, 1);
         return i > -1 ? uiPath.substring(0, i) : uiPath;
+    }
+
+    /*
+     * Root name of the ui path, say for /someApp it's someApp, but
+     * for /someApp/p1 it's still someApp
+     */
+    public static String getRootName(String uiPath) {
+        String rootUIPath = getRootUIPath(uiPath);
+        return rootUIPath.startsWith(GuiPath.PATH_SEP) ? rootUIPath.substring(1) : rootUIPath;
     }
 
     public static Pair<String, String> split(String uiPath) {

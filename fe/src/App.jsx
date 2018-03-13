@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 
 import AppMain from "./widgets/app/AppMain";
 import NoAppName from "./widgets/app/NoAppName";
-import MetaStore from './MetaStore';
+import MetaStore from './meta/MetaStore';
 
 const theme = createMuiTheme({
     palette: {

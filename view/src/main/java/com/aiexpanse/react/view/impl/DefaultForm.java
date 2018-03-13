@@ -10,4 +10,9 @@ public class DefaultForm extends AbstractWidgetContainer implements Form {
         return WidgetType.FORM;
     }
 
+    @Override
+    protected Boolean eagerDefault() {
+        return true;
+    }
+
 }

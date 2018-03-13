@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 class NavTree extends PureComponent {
 
     handleLeafClick = (uipath) => {
-        this.props.history.push(`/${uipath}`);
+        this.props.history.push(uipath);
     };
 
     render() {

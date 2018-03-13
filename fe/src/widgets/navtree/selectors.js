@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { getApplication } from "../selectors";
-import {RecordStatus} from "../../records/Widget";
+import {RecordStatus} from "../../meta/records/Widget";
 import {isNonEmptyArray} from "../../utils/TypeUtils";
 
 const widgetRecordToNode = (record) => (

@@ -1,4 +1,4 @@
-import {DEFAULT} from "../constants/WidgetType";
+import {DEFAULT} from "../../constants/WidgetType";
 
 class RecordStatus {
     static UNINITIALIZED = "UNINITIALIZED";

@@ -22,8 +22,8 @@ public interface Widget extends IdentifiedBy<String> {
     void setVisible(Boolean visible);
 
     @DDR(name = "Gui Domain", endingClass = GuiDomain.class)
-    GuiDomain<?> getDomain();
-    void setDomain(GuiDomain<?> domain);
+    GuiDomain<? extends Widget> getDomain();
+    void setDomain(GuiDomain<? extends Widget> domain);
 
     @DDI(name = "Widget Type")
     WidgetType getWidgetType();
