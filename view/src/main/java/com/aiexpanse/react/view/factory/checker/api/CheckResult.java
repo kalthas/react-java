@@ -1,6 +1,6 @@
 package com.aiexpanse.react.view.factory.checker.api;
 
-public interface WidgetClassCheckResult {
+public interface CheckResult {
 
     boolean isFailed();
 

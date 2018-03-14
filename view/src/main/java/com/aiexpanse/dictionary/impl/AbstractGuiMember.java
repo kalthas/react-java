@@ -1,10 +1,8 @@
 package com.aiexpanse.dictionary.impl;
 
-import com.aiexpanse.react.view.factory.api.UIAnnotation;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiMember;
-import com.aiexpanse.react.view.dictionary.api.GuiPath;
-import com.aiexpanse.react.view.dictionary.api.GuiRelationship;
+import com.aiexpanse.react.view.factory.api.UIAnnotation;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -65,11 +63,6 @@ public abstract class AbstractGuiMember<F, T> implements GuiMember<F, T> {
     @Override
     public void setIndex(Integer index) {
         this.index = index;
-    }
-
-    @Override
-    public <E> GuiPath<E, T> prepend(GuiRelationship<E, F> relationship) {
-        return path().prepend(relationship.path());
     }
 
 }

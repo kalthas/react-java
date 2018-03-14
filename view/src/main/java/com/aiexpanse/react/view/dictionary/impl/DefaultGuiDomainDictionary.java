@@ -6,6 +6,7 @@ import com.google.common.base.Strings;
 import com.google.inject.Singleton;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -13,8 +14,8 @@ import java.util.concurrent.ConcurrentMap;
 @Singleton
 public class DefaultGuiDomainDictionary implements GuiDomainDictionary {
 
-    final ConcurrentMap<Class<?>, GuiDomain<?>> domainByClass = new ConcurrentHashMap<>();
-    final ConcurrentMap<String, GuiDomain<?>> topLevelDomainByName = new ConcurrentHashMap<>();
+    private final ConcurrentMap<Class<?>, GuiDomain<?>> domainByClass = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, GuiDomain<?>> topLevelDomainByName = new ConcurrentHashMap<>();
 
     @Override
     public GuiDomain<?> getTopLevelDomain(String domainName) {
@@ -37,7 +38,7 @@ public class DefaultGuiDomainDictionary implements GuiDomainDictionary {
 
     @Override
     public Collection<GuiDomain<?>> getAllDomains() {
-        return null;
+        return Collections.unmodifiableCollection(domainByClass.values());
     }
 
     @Override

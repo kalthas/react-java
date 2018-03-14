@@ -1,13 +1,14 @@
 package com.aiexpanse.react.view.dictionary.impl;
 
 import com.aiexpanse.react.view.TypeConfig;
-import com.aiexpanse.react.view.annotation.UIEventHandler;
+import com.aiexpanse.react.view.annotation.UIEventsHandler;
 import com.aiexpanse.react.view.factory.api.UIAnnotation;
 import com.aiexpanse.react.view.annotation.UIApplication;
 import com.aiexpanse.react.view.api.Application;
 import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetType;
 import com.aiexpanse.react.view.dictionary.api.*;
+import com.aiexpanse.react.view.factory.checker.api.HandlerChecker;
 import com.aiexpanse.react.view.factory.checker.api.WidgetClassChecker;
 import com.aiexpanse.utils.TypeUtils;
 import com.google.common.base.Strings;
@@ -30,6 +31,9 @@ public class AnnotationBasedGuiParser implements GuiDomainParser {
 
     @Inject
     private WidgetClassChecker widgetClassChecker;
+
+    @Inject
+    private HandlerChecker handlerChecker;
 
     @Inject
     private TypeConfig typeConfig;
@@ -56,8 +60,12 @@ public class AnnotationBasedGuiParser implements GuiDomainParser {
         widgetClassChecker.check(widgetClass);
         domain = parseDomainClass(widgetClass);
         parseRelationshipAndItems(widgetClass, (DefaultGuiDomain)domain);
-        domainDictionary.addDomain(domain);
+        HandlerDomain<?> handlerDomain = parseHandlerDomain(widgetClass);
+        if (handlerDomain != null) {
+            handlerChecker.check(domain, handlerDomain);
+        }
 
+        domainDictionary.addDomain(domain);
         if (domain.getWidgetType().equals(WidgetType.APPLICATION)) {
             if (!Strings.isNullOrEmpty(domain.getName())) {
                 domainDictionary.addTopLevelDomain(domain);
@@ -142,10 +150,6 @@ public class AnnotationBasedGuiParser implements GuiDomainParser {
         } else {
             domain.setName(clazz.getSimpleName());
         }
-        Annotation annotation = clazz.getAnnotation(UIEventHandler.class);
-        if (annotation != null) {
-            handlerDomainParser.parseDomain(annotation.annotationType());
-        }
         domain.setWidgetType(WidgetType.getWidgetTypeByClass(clazz));
         List<UIAnnotation> uiAnnotations = Arrays.stream(clazz.getAnnotations())
                 .map(TypeConfig::getUIAnnotation)
@@ -153,6 +157,14 @@ public class AnnotationBasedGuiParser implements GuiDomainParser {
                 .collect(Collectors.toList());
         domain.setUIAnnotations(uiAnnotations);
         return domain;
+    }
+
+    private HandlerDomain<?> parseHandlerDomain(Class clazz) {
+        UIEventsHandler uiEventsHandler = (UIEventsHandler) clazz.getAnnotation(UIEventsHandler.class);
+        if (uiEventsHandler != null) {
+            return handlerDomainParser.parseDomain(uiEventsHandler.clazz());
+        }
+        return null;
     }
 
 }

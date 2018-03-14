@@ -1,5 +1,6 @@
 package com.aiexpanse.react.view.dictionary.impl;
 
+import com.aiexpanse.react.view.api.EventType;
 import com.aiexpanse.react.view.dictionary.api.HandlerDomain;
 import com.aiexpanse.react.view.dictionary.api.HandlerItem;
 
@@ -8,8 +9,9 @@ import java.lang.reflect.Method;
 public class DefaultHandlerItem<F, T> implements HandlerItem<F, T> {
 
     protected String name;
-    protected HandlerDomain<F> definingDomain;
+    private HandlerDomain<F> definingDomain;
     private Method declaredMethod;
+    private EventType eventType;
 
     @Override
     public HandlerDomain<F> getDomain() {
@@ -19,6 +21,16 @@ public class DefaultHandlerItem<F, T> implements HandlerItem<F, T> {
     @Override
     public void setDomain(HandlerDomain<F> domain) {
         this.definingDomain = domain;
+    }
+
+    @Override
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    @Override
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     @Override

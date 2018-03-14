@@ -2,12 +2,11 @@ package com.aiexpanse.react.view.impl;
 
 import com.aiexpanse.lang.Pair;
 import com.aiexpanse.react.view.TypeConfig;
-import com.aiexpanse.react.view.api.Handler;
+import com.aiexpanse.react.view.api.Event;
 import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetContainer;
 import com.aiexpanse.react.view.utils.UIPathUtils;
 import com.aiexpanse.utils.TypeUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +18,7 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     private List<Widget> contents = new CopyOnWriteArrayList<>();
     private Boolean contentsLoaded = false;
     private Boolean eager = eagerDefault();
-    private Handler handler;
+    private List<Event> events;
 
     protected Boolean eagerDefault() {
         return true;
@@ -91,17 +90,16 @@ public abstract class AbstractWidgetContainer extends DefaultWidget implements W
     }
 
     @Override
-    @JsonIgnore
-    public Handler getHandler() {
-        return handler;
+    public List<Event> getEvents() {
+        return events;
     }
 
     @Override
-    public void setHandler(Handler handler) {
-        this.handler = handler;
-        if (handler instanceof AbstractHandler) {
-            ((AbstractHandler)handler).setSubject(this);
+    public void setEvents(List<Event> events) {
+        for (Event event : events) {
+            event.bind(this);
         }
+        this.events = events;
     }
 
     private void checkAcceptance(Widget content) {

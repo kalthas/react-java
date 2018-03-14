@@ -11,9 +11,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Singleton
@@ -26,10 +24,13 @@ public class TypeConfig {
     @Inject
     public TypeConfig(Injector injector) {
         initAcceptableAnnotationOnField();
+        initAcceptableAnnotationOnType();
         initAcceptableChildTypes();
         initAssemblerByClass(injector);
         initFieldAssemblerByClass(injector);
-        ALL_UI_ANNOTATIONS = ACCEPTABLE_ANNOTATION_ON_FIELD.keySet();
+        Set<Class<? extends Annotation>> allUIAnnotations = new HashSet<>(ACCEPTABLE_ANNOTATION_ON_FIELD.keySet());
+        allUIAnnotations.addAll(ACCEPTABLE_ANNOTATION_ON_TYPE.keySet());
+        ALL_UI_ANNOTATIONS = Collections.unmodifiableSet(allUIAnnotations);
         SELF.compareAndSet(null, this);
     }
 
@@ -43,8 +44,12 @@ public class TypeConfig {
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIElement.class, Sets.newHashSet(Element.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIField.class, Sets.newHashSet(Field.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIContainer.class, Sets.newHashSet(WidgetContainer.class));
-        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIEventHandler.class, Sets.newHashSet(WidgetContainer.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIWidget.class, Sets.newHashSet(Widget.class));
+    }
+    private final Map<Class<? extends Annotation>, Set<Class<?>>> ACCEPTABLE_ANNOTATION_ON_TYPE = new HashMap<>();
+    private void initAcceptableAnnotationOnType() {
+        ACCEPTABLE_ANNOTATION_ON_TYPE.put(UIApplication.class, Sets.newHashSet(Application.class));
+        ACCEPTABLE_ANNOTATION_ON_TYPE.put(UIEventsHandler.class, Sets.newHashSet(WidgetContainer.class));
     }
 
     private final Map<WidgetType, Set<Class<? extends Widget>>> ACCEPTABLE_CHILD_TYPES = new HashMap<>();
@@ -63,7 +68,7 @@ public class TypeConfig {
         ASSEMBLER_BY_CLASS.put(UIButton.class, injector.getInstance(UIButtonAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIField.class, injector.getInstance(UIFieldAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIContainer.class, injector.getInstance(UIContainerAssembler.class));
-        ASSEMBLER_BY_CLASS.put(UIEventHandler.class, injector.getInstance(UIEventHandlerAssembler.class));
+        ASSEMBLER_BY_CLASS.put(UIEventsHandler.class, injector.getInstance(UIEventsHandlerAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIWidget.class, injector.getInstance(UIWidgetAssembler.class));
     }
     private final Map<Class<? extends Annotation>, Assembler> FIELD_ASSEMBLER_BY_CLASS = new HashMap<>();

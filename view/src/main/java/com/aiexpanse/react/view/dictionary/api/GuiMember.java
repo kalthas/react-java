@@ -23,8 +23,4 @@ public interface GuiMember<F, T> extends Member<F> {
     Integer getIndex();
     void setIndex(Integer index);
 
-    <E> GuiPath<E, T> prepend(GuiRelationship<E, F> relationship);
-
-    GuiPath<F, T> path();
-
 }

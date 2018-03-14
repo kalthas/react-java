@@ -9,6 +9,8 @@ import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 @DDD(name = "Widget")
 public interface Widget extends IdentifiedBy<String> {
 
+    String PATH_SEP = "/";
+
     @DDI(name = "Name")
     String getName();
     void setName(String name);

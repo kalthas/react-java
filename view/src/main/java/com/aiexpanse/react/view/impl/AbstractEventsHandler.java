@@ -1,9 +1,9 @@
 package com.aiexpanse.react.view.impl;
 
-import com.aiexpanse.react.view.api.Handler;
+import com.aiexpanse.react.view.api.EventsHandler;
 import com.aiexpanse.react.view.api.WidgetContainer;
 
-public abstract class AbstractHandler implements Handler {
+public abstract class AbstractEventsHandler implements EventsHandler {
 
     private WidgetContainer subject;
 

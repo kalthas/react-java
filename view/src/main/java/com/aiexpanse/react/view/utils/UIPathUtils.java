@@ -1,7 +1,7 @@
 package com.aiexpanse.react.view.utils;
 
 import com.aiexpanse.lang.Pair;
-import com.aiexpanse.react.view.dictionary.api.GuiPath;
+import com.aiexpanse.react.view.api.Widget;
 
 import java.util.Objects;
 
@@ -17,7 +17,7 @@ public final class UIPathUtils {
      */
     public static String getRootUIPath(String uiPath) {
         Objects.requireNonNull(uiPath, "cannot get root uiPath from null");
-        int i = uiPath.indexOf(GuiPath.PATH_SEP, 1);
+        int i = uiPath.indexOf(Widget.PATH_SEP, 1);
         return i > -1 ? uiPath.substring(0, i) : uiPath;
     }
 
@@ -27,19 +27,19 @@ public final class UIPathUtils {
      */
     public static String getRootName(String uiPath) {
         String rootUIPath = getRootUIPath(uiPath);
-        return rootUIPath.startsWith(GuiPath.PATH_SEP) ? rootUIPath.substring(1) : rootUIPath;
+        return rootUIPath.startsWith(Widget.PATH_SEP) ? rootUIPath.substring(1) : rootUIPath;
     }
 
     public static Pair<String, String> split(String uiPath) {
         Objects.requireNonNull(uiPath, "cannot split null");
-        int i = uiPath.indexOf(GuiPath.PATH_SEP);
+        int i = uiPath.indexOf(Widget.PATH_SEP);
         String head = i > -1 ? uiPath.substring(0, i) : uiPath;
         String remaining = (i > -1 && uiPath.length()-1 != i) ? uiPath.substring(i+1) : null;
         return new Pair<>(head, remaining);
     }
 
     public static String getSubPath(String baseUIPath, String uiPath) {
-        if (baseUIPath != null && uiPath != null && uiPath.startsWith(baseUIPath + GuiPath.PATH_SEP)) {
+        if (baseUIPath != null && uiPath != null && uiPath.startsWith(baseUIPath + Widget.PATH_SEP)) {
             return uiPath.substring(baseUIPath.length() + 1);
         }
         return null;
@@ -48,7 +48,7 @@ public final class UIPathUtils {
     public static boolean isParentUIPath(String containerUIPath, String uiPath) {
         Objects.requireNonNull(containerUIPath, "container uiPath is null");
         Objects.requireNonNull(uiPath, "uiPath is null");
-        return uiPath.startsWith(containerUIPath + GuiPath.PATH_SEP);
+        return uiPath.startsWith(containerUIPath + Widget.PATH_SEP);
     }
 
 }

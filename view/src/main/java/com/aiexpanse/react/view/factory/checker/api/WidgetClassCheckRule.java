@@ -4,6 +4,6 @@ import com.aiexpanse.react.view.api.Widget;
 
 public interface WidgetClassCheckRule {
 
-    WidgetClassCheckResult apply(Class<? extends Widget> widgetClass);
+    CheckResult apply(Class<? extends Widget> widgetClass);
 
 }

@@ -1,7 +1,5 @@
 package com.aiexpanse.react.view.factory.impl;
 
-import com.aiexpanse.react.view.annotation.UIEvent;
-import com.aiexpanse.react.view.api.Handler;
 import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetContainer;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
@@ -9,7 +7,6 @@ import com.aiexpanse.react.view.dictionary.api.GuiDomainParser;
 import com.aiexpanse.react.view.dictionary.api.GuiMember;
 import com.aiexpanse.react.view.dictionary.api.GuiRelationship;
 import com.aiexpanse.react.view.factory.api.WidgetFactory;
-import com.aiexpanse.utils.GuiceUtils;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -17,9 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Singleton
 public class DefaultWidgetFactory implements WidgetFactory {
@@ -63,15 +57,6 @@ public class DefaultWidgetFactory implements WidgetFactory {
         populateChildrenFromRelationships(guiDomain, widgetContainer);
         widgetContainer.setContentsLoaded(true);
         return widgetContainer;
-    }
-
-    @Override
-    public <C extends WidgetContainer> C createEvents(C widgetContainer) {
-        Handler handler = widgetContainer.getHandler();
-        if (null != handler) {
-            return widgetContainer;
-        }
-        Class<? extends Handler> handlerClass = GuiceUtils.getRawClassFromProxy(handler.getClass());
     }
 
     private <W extends Widget> W createWidget(GuiDomain<W> guiDomain, GuiRelationship<?, W> relationship, Boolean forceEager) {
@@ -142,20 +127,6 @@ public class DefaultWidgetFactory implements WidgetFactory {
         } catch (IllegalAccessException e) {
             LOGGER.error("Failed to stitch widget child [{}] to field [{}]", childWidget.getName(), declaredField.toString(), e);
         }
-    }
-
-    private Collection<Method> findEventHandlingMethods(Class<? extends Handler> handlerClass) {
-        Set<UIEvent> collect = Arrays.stream(handlerClass.getMethods())
-                .map(method -> method.getAnnotation(UIEvent.class))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-        Collection<Method> eventHandlingMethods = new HashSet<>();
-        for (Method method : handlerClass.getMethods()) {
-            if (method.getAnnotation(UIEvent.class) != null) {
-                eventHandlingMethods.add(method);
-            }
-        }
-        return eventHandlingMethods;
     }
 
 }

@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +29,7 @@ public class DefaultUISession implements UISession {
     private WidgetFactory widgetFactory;
 
     private transient Map<String, Application> applications = new ConcurrentHashMap<>();
+    private transient Map<String, Event> events = new ConcurrentHashMap<>();
 
     @Override
     public Widget getWidget(String uiPath) {
@@ -49,9 +51,15 @@ public class DefaultUISession implements UISession {
             WidgetContainer widgetContainer = (WidgetContainer) widget;
             if (!widgetContainer.getContentsLoaded()) {
                 widgetFactory.createContents(widgetContainer);
+                widgetContainer.getAllContents().forEach(this::registerEvents);
             }
         }
         return widget;
+    }
+
+    @Override
+    public Event getEventByPath(String eventPath) {
+        return events.get(eventPath);
     }
 
     private void loadApplication(String applicationUiPath) {
@@ -64,9 +72,24 @@ public class DefaultUISession implements UISession {
                     if (applicationDomain == null) {
                         throw new RuntimeException("Cannot find application domain with name: " + applicationName);
                     }
-                    applications.put(applicationUiPath, widgetFactory.createWidget(applicationDomain));
+                    Application application = widgetFactory.createWidget(applicationDomain);
+                    applications.put(applicationUiPath, application);
+                    application.getAllContents().forEach(this::registerEvents);
                 }
             }
+        }
+    }
+
+    private void registerEvents(Widget widget) {
+        if (widget instanceof WidgetContainer) {
+            WidgetContainer widgetContainer = (WidgetContainer) widget;
+            List<Event> events = widgetContainer.getEvents();
+            if (events != null) {
+                for (Event event : events) {
+                    this.events.put(event.getEventPath(), event);
+                }
+            }
+            widgetContainer.getAllContents().forEach(this::registerEvents);
         }
     }
 

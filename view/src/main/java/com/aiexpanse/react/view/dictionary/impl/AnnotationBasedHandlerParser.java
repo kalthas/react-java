@@ -1,7 +1,7 @@
 package com.aiexpanse.react.view.dictionary.impl;
 
 import com.aiexpanse.react.view.annotation.UIEvent;
-import com.aiexpanse.react.view.api.Handler;
+import com.aiexpanse.react.view.api.EventsHandler;
 import com.aiexpanse.react.view.dictionary.api.HandlerDomain;
 import com.aiexpanse.react.view.dictionary.api.HandlerDomainDictionary;
 import com.aiexpanse.react.view.dictionary.api.HandlerDomainParser;
@@ -23,30 +23,32 @@ public class AnnotationBasedHandlerParser implements HandlerDomainParser {
 
     @Override
     public <F, D extends HandlerDomain<F>> D parseDomain(Class<F> clazz) {
-        if (!Handler.class.isAssignableFrom(clazz)) {
+        if (!EventsHandler.class.isAssignableFrom(clazz)) {
             throw new RuntimeException("Class[" + clazz.getName() + "] is not a handler class");
         }
-        return (D)parse((Class<? extends Handler>)clazz);
+        return (D)parse((Class<? extends EventsHandler>)clazz);
     }
 
-    private HandlerDomain<?> parse(Class<? extends Handler> handlerClass) {
-        HandlerDomain<?> domain = domainDictionary.getDomain(handlerClass);
+    private HandlerDomain<?> parse(Class<? extends EventsHandler> handlerClass) {
+        HandlerDomain<? extends EventsHandler> domain = domainDictionary.getDomain(handlerClass);
         if (domain != null) {
             return domain;
         }
         domain = parseDomainClass(handlerClass);
-        parseRelationshipAndItems(handlerClass, (DefaultHandlerDomain)domain);
+        parseItems(handlerClass, (DefaultHandlerDomain)domain);
         domainDictionary.addDomain(domain);
 
         return domain;
     }
 
-    private void parseRelationshipAndItems(Class<?> handlerClass, DefaultHandlerDomain domain) {
+    private void parseItems(Class<?> handlerClass, DefaultHandlerDomain domain) {
         Method[] methods = handlerClass.getMethods();
         for (Method method : methods) {
             UIEvent annotation = method.getAnnotation(UIEvent.class);
             if (annotation != null) {
-                HandlerItem item = parseItem(domain, method);
+                HandlerItem handlerItem = parseItem(domain, method);
+                handlerItem.setName(annotation.field());
+                handlerItem.setEventType(annotation.type());
             }
         }
     }
@@ -63,9 +65,9 @@ public class AnnotationBasedHandlerParser implements HandlerDomainParser {
         return item;
     }
 
-    private HandlerDomain<?> parseDomainClass(Class clazz) {
-        DefaultHandlerDomain<?> domain = injector.getInstance(DefaultHandlerDomain.class);
-        domain.setDomainClass(clazz);
+    private HandlerDomain<? extends EventsHandler> parseDomainClass(Class<? extends EventsHandler> clazz) {
+        DefaultHandlerDomain<? extends EventsHandler> domain = injector.getInstance(DefaultHandlerDomain.class);
+        domain.setDomainClass((Class)clazz);
         return domain;
     }
 

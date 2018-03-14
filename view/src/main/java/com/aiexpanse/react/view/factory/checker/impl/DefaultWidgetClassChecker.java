@@ -1,7 +1,7 @@
 package com.aiexpanse.react.view.factory.checker.impl;
 
 import com.aiexpanse.react.view.api.Widget;
-import com.aiexpanse.react.view.factory.checker.api.WidgetClassCheckResult;
+import com.aiexpanse.react.view.factory.checker.api.CheckResult;
 import com.aiexpanse.react.view.factory.checker.api.WidgetClassCheckRule;
 import com.aiexpanse.react.view.factory.checker.api.WidgetClassChecker;
 import com.google.inject.Singleton;
@@ -22,12 +22,12 @@ public class DefaultWidgetClassChecker implements WidgetClassChecker {
 
     @Override
     public void check(Class<? extends Widget> widgetClass) {
-        List<WidgetClassCheckResult> errors = rules.stream()
+        List<CheckResult> errors = rules.stream()
                 .map(rule -> rule.apply(widgetClass))
                 .filter(result -> result != null && result.isFailed())
                 .collect(Collectors.toList());
         if (!errors.isEmpty()) {
-            throw new WidgetClassCheckException(widgetClass, errors);
+            throw new CheckException("Widget class[" + widgetClass.getName() + "]", errors);
         }
     }
 

@@ -4,10 +4,13 @@ import com.aiexpanse.TestModule;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
 import com.aiexpanse.react.view.dictionary.api.GuiItem;
 import com.aiexpanse.react.view.dictionary.api.GuiRelationship;
+import com.aiexpanse.react.view.factory.checker.impl.CheckException;
+import com.aiexpanse.testdomain.TestFormWithWrongHandler;
 import com.aiexpanse.testdomain.TestView;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Collection;
 
@@ -33,6 +36,12 @@ class AnnotationBasedGuiParserTest {
 
         Collection<GuiRelationship<TestView, ?>> allRelationships = domain.getAllRelationships();
         assertEquals(2, allRelationships.size());
+    }
+
+    @Test
+    void wrongFieldInHandler() {
+        Executable parse = () -> parser.parseDomain(TestFormWithWrongHandler.class);
+        assertThrows(CheckException.class, parse);
     }
 
 }

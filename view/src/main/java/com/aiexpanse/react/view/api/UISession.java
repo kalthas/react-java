@@ -20,4 +20,6 @@ public interface UISession extends IdentifiedBy<String> {
      */
     Widget loadWidget(String uiPath);
 
+    Event getEventByPath(String eventPath);
+
 }

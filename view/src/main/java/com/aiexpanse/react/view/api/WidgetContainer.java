@@ -4,6 +4,7 @@ import com.aiexpanse.dictionary.api.DDD;
 import com.aiexpanse.dictionary.api.DDI;
 
 import java.util.Collection;
+import java.util.List;
 
 @DDD(name = "Widget Container")
 public interface WidgetContainer extends Widget {
@@ -22,7 +23,8 @@ public interface WidgetContainer extends Widget {
     Widget getContentBySubPath(String subPath);
 
     void add(Widget widget);
-    Handler getHandler();
 
-    void setHandler(Handler handler);
+    List<Event> getEvents();
+    void setEvents(List<Event> events);
+
 }

@@ -4,7 +4,6 @@ import com.aiexpanse.react.view.api.Widget;
 import com.aiexpanse.react.view.api.WidgetContainer;
 import com.aiexpanse.react.view.api.WidgetType;
 import com.aiexpanse.react.view.dictionary.api.GuiDomain;
-import com.aiexpanse.react.view.dictionary.api.GuiPath;
 import com.aiexpanse.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Strings;
@@ -70,7 +69,7 @@ public class DefaultWidget implements Widget {
 
     @Override
     public String getUIPath() {
-        return container == null ? getName() : container.getUIPath() + GuiPath.PATH_SEP + getName();
+        return container == null ? getName() : container.getUIPath() + PATH_SEP + getName();
     }
 
     @Override

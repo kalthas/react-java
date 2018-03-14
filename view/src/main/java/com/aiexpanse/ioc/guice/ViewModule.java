@@ -3,9 +3,13 @@ package com.aiexpanse.ioc.guice;
 import com.aiexpanse.react.view.api.*;
 import com.aiexpanse.react.view.dictionary.api.*;
 import com.aiexpanse.react.view.dictionary.impl.*;
+import com.aiexpanse.react.view.factory.api.HandlerFactory;
 import com.aiexpanse.react.view.factory.api.WidgetFactory;
+import com.aiexpanse.react.view.factory.checker.api.HandlerChecker;
 import com.aiexpanse.react.view.factory.checker.api.WidgetClassChecker;
+import com.aiexpanse.react.view.factory.checker.impl.DefaultHandlerChecker;
 import com.aiexpanse.react.view.factory.checker.impl.DefaultWidgetClassChecker;
+import com.aiexpanse.react.view.factory.impl.DefaultHandlerFactory;
 import com.aiexpanse.react.view.factory.impl.DefaultWidgetFactory;
 import com.aiexpanse.react.view.impl.*;
 import com.google.inject.AbstractModule;
@@ -32,6 +36,8 @@ public class ViewModule extends AbstractModule {
 
         bind(HandlerDomainDictionary.class).to(DefaultHandlerDomainDictionary.class);
         bind(HandlerDomainParser.class).to(AnnotationBasedHandlerParser.class);
+        bind(HandlerChecker.class).to(DefaultHandlerChecker.class);
+        bind(HandlerFactory.class).to(DefaultHandlerFactory.class);
 
         bind(HandlerDomain.class).to(DefaultHandlerDomain.class);
         bind(HandlerItem.class).to(DefaultHandlerItem.class);

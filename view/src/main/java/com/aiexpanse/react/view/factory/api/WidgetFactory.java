@@ -12,6 +12,5 @@ public interface WidgetFactory {
     <W extends Widget> W createWidget(GuiDomain<W> guiDomain, Boolean forceEager);
 
     <C extends WidgetContainer> C createContents(C widgetContainer);
-    <C extends WidgetContainer> C createEvents(C widgetContainer);
 
 }

@@ -8,6 +8,7 @@ import {VIEW} from "../constants/WidgetType";
 import FormRecord, {FormProps} from "./records/Form";
 import FieldRecord, {FieldProps, FieldType} from "./records/Field";
 import ButtonRecord, {ButtonProps} from "./records/Button";
+import EventRecord from "./records/Event";
 
 const Meta = [
     [ApplicationRecord, ApplicationProps],
@@ -99,7 +100,7 @@ const fromJS = (json, addRecord, forNormalize=false) => {
         const [Record, Props] = meta;
         const isContainer = Props.hasOwnProperty("allContents");
         if (isContainer && isNonEmptyArray(json.allContents)) {
-            for (let i=0; i< json.allContents.length; i++) {
+            for (let i=0; i<json.allContents.length; i++) {
                 const content = json.allContents[i];
                 if (!forNormalize && NormalizedTypes.has(content.widgetType)) {
                     const record = fromJS(content, addRecord, true);
@@ -109,6 +110,10 @@ const fromJS = (json, addRecord, forNormalize=false) => {
                     json.allContents[i] = fromJS(content, addRecord);
                 }
             }
+        }
+        const hasEvents = Props.hasOwnProperty("events");
+        if (hasEvents && isNonEmptyArray(json.events)) {
+            json.events = json.events.map(event => new EventRecord(event));
         }
         json.recordStatus = RecordStatus.INITIALIZED;
         return new Record(json);

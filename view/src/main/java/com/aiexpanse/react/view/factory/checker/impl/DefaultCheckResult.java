@@ -1,15 +1,15 @@
 package com.aiexpanse.react.view.factory.checker.impl;
 
-import com.aiexpanse.react.view.factory.checker.api.WidgetClassCheckResult;
+import com.aiexpanse.react.view.factory.checker.api.CheckResult;
 import com.google.common.base.Strings;
 
-public class DefaultWidgetClassCheckResult implements WidgetClassCheckResult {
+public class DefaultCheckResult implements CheckResult {
 
     private boolean failed = false;
     private String errorMessage;
 
-    public static DefaultWidgetClassCheckResult newInstanceWithError(String errorMessage) {
-        DefaultWidgetClassCheckResult result = new DefaultWidgetClassCheckResult();
+    public static DefaultCheckResult newInstanceWithError(String errorMessage) {
+        DefaultCheckResult result = new DefaultCheckResult();
         result.setErrorMessage(errorMessage);
         return result;
     }
