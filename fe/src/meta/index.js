@@ -26,8 +26,8 @@ const NormalizedTypes = new Set([
 ]);
 
 /*
- * This fromJS works similarly as native Immutable.fromJS. Only that it is aware of react view records. Not that
- * View will be normalized. say for
+ * This fromJS works similarly as native Immutable.fromJS. Only that it is aware of react view records. Note that
+ * View will be normalized. say
  *
  *   perspective1:
  *     ...perspective1Props

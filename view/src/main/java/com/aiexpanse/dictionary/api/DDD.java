@@ -9,7 +9,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface DDD {
+
     String name();
     Class<? extends Namespace> namespace() default Namespace.class;
-    Class<?>[] domainImplClasses() default {};
+
 }

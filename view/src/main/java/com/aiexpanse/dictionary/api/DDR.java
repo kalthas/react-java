@@ -14,10 +14,5 @@ public @interface DDR {
     String alias() default "";
     String description() default "";
     Class<?> endingClass();
-    boolean isCollection() default false;
-    boolean isDimension() default true;
-    boolean isValueType() default true;
-
-    Class<?> preferredTransform() default Void.class;
 
 }

@@ -43,6 +43,7 @@ public class TypeConfig {
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIElement.class, Sets.newHashSet(Element.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIField.class, Sets.newHashSet(Field.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIContainer.class, Sets.newHashSet(WidgetContainer.class));
+        ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIEventHandler.class, Sets.newHashSet(WidgetContainer.class));
         ACCEPTABLE_ANNOTATION_ON_FIELD.put(UIWidget.class, Sets.newHashSet(Widget.class));
     }
 

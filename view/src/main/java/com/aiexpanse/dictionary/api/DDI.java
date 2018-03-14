@@ -14,6 +14,4 @@ public @interface DDI {
     String alias() default "";
     String description() default "";
 
-    Class<?> preferredTransform() default Void.class;
-
 }
