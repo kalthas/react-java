@@ -7,7 +7,6 @@ import com.aiexpanse.react.view.factory.api.WidgetFactory;
 import com.aiexpanse.react.view.utils.UIPathUtils;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
-import org.omg.CORBA.WCharSeqHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

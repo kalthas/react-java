@@ -46,6 +46,17 @@ public class DefaultGuiRelationship<F, T> extends AbstractGuiMember<F, T> implem
 
     @Override
     public GuiPath<F, T> path() {
-        return null;
+        return new DefaultGuiPath<>(this);
     }
+
+    @Override
+    public String toString() {
+        CharSequence path = PATH.get();
+        if (path == null) {
+            PATH.compareAndSet(null, path().toString());
+            path = PATH.get();
+        }
+        return path.toString();
+    }
+
 }

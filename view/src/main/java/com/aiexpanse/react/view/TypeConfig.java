@@ -63,6 +63,7 @@ public class TypeConfig {
         ASSEMBLER_BY_CLASS.put(UIButton.class, injector.getInstance(UIButtonAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIField.class, injector.getInstance(UIFieldAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIContainer.class, injector.getInstance(UIContainerAssembler.class));
+        ASSEMBLER_BY_CLASS.put(UIEventHandler.class, injector.getInstance(UIEventHandlerAssembler.class));
         ASSEMBLER_BY_CLASS.put(UIWidget.class, injector.getInstance(UIWidgetAssembler.class));
     }
     private final Map<Class<? extends Annotation>, Assembler> FIELD_ASSEMBLER_BY_CLASS = new HashMap<>();

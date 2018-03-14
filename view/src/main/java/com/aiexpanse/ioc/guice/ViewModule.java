@@ -1,12 +1,8 @@
 package com.aiexpanse.ioc.guice;
 
 import com.aiexpanse.react.view.api.*;
-import com.aiexpanse.react.view.dictionary.api.GuiDomainDictionary;
-import com.aiexpanse.react.view.dictionary.api.GuiDomainParser;
-import com.aiexpanse.react.view.dictionary.api.GuiDomainParserHelper;
-import com.aiexpanse.react.view.dictionary.impl.AnnotationBasedGuiParser;
-import com.aiexpanse.react.view.dictionary.impl.DefaultGuiDomainDictionary;
-import com.aiexpanse.react.view.dictionary.impl.DefaultGuiDomainParserHelper;
+import com.aiexpanse.react.view.dictionary.api.*;
+import com.aiexpanse.react.view.dictionary.impl.*;
 import com.aiexpanse.react.view.factory.api.WidgetFactory;
 import com.aiexpanse.react.view.factory.checker.api.WidgetClassChecker;
 import com.aiexpanse.react.view.factory.checker.impl.DefaultWidgetClassChecker;
@@ -33,6 +29,12 @@ public class ViewModule extends AbstractModule {
         bind(Form.class).to(DefaultForm.class);
         bind(Button.class).to(DefaultButton.class);
         bind(Field.class).to(DefaultField.class);
+
+        bind(HandlerDomainDictionary.class).to(DefaultHandlerDomainDictionary.class);
+        bind(HandlerDomainParser.class).to(AnnotationBasedHandlerParser.class);
+
+        bind(HandlerDomain.class).to(DefaultHandlerDomain.class);
+        bind(HandlerItem.class).to(DefaultHandlerItem.class);
     }
 
 }

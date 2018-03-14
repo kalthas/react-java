@@ -1,6 +1,7 @@
 package com.aiexpanse.react.view.dictionary.impl;
 
 import com.aiexpanse.react.view.TypeConfig;
+import com.aiexpanse.react.view.annotation.UIEventHandler;
 import com.aiexpanse.react.view.factory.api.UIAnnotation;
 import com.aiexpanse.react.view.annotation.UIApplication;
 import com.aiexpanse.react.view.api.Application;
@@ -15,9 +16,8 @@ import com.google.inject.Singleton;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Singleton
 public class AnnotationBasedGuiParser implements GuiDomainParser {
@@ -34,10 +34,13 @@ public class AnnotationBasedGuiParser implements GuiDomainParser {
     @Inject
     private TypeConfig typeConfig;
 
+    @Inject
+    private HandlerDomainParser handlerDomainParser;
+
     @Override
     public <F, D extends GuiDomain<F>> D parseDomain(Class<F> clazz) {
         if (!Widget.class.isAssignableFrom(clazz)) {
-            throw new RuntimeException("Class[" + clazz.getName() + "] is not widget class");
+            throw new RuntimeException("Class[" + clazz.getName() + "] is not a widget class");
         }
         return (D)parse((Class<? extends Widget>)clazz);
     }
@@ -139,14 +142,15 @@ public class AnnotationBasedGuiParser implements GuiDomainParser {
         } else {
             domain.setName(clazz.getSimpleName());
         }
-        domain.setWidgetType(WidgetType.getWidgetTypeByClass(clazz));
-        List<UIAnnotation> uiAnnotations = new ArrayList<>();
-        for (Annotation annotation : clazz.getAnnotations()) {
-            UIAnnotation uiAnnotation = TypeConfig.getUIAnnotation(annotation);
-            if (uiAnnotation != null) {
-                uiAnnotations.add(uiAnnotation);
-            }
+        Annotation annotation = clazz.getAnnotation(UIEventHandler.class);
+        if (annotation != null) {
+            handlerDomainParser.parseDomain(annotation.annotationType());
         }
+        domain.setWidgetType(WidgetType.getWidgetTypeByClass(clazz));
+        List<UIAnnotation> uiAnnotations = Arrays.stream(clazz.getAnnotations())
+                .map(TypeConfig::getUIAnnotation)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
         domain.setUIAnnotations(uiAnnotations);
         return domain;
     }
