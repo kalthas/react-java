@@ -42,6 +42,10 @@ class MetaStore {
         }
     }
 
+    fireEvent(uipath, event) {
+
+    }
+
 }
 
 export default new MetaStore();

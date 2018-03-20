@@ -82,7 +82,7 @@ public class DefaultWidgetFactory implements WidgetFactory {
     private <W extends Widget> W createWidget(GuiRelationship<?, W> relationship) {
         GuiDomain<W> endingDomain = relationship.getEndingDomain();
         W widget = createWidget(endingDomain, relationship, false);
-        // TBD: reorder-index and populate event
+        // TBD: reorder-index
         return widget;
     }
 

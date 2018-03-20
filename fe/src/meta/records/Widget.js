@@ -17,6 +17,7 @@ const WidgetProps = Object.assign(
         displayName: null,
         visible: false,
         widgetType: DEFAULT,
+        events: null,
 
         // This prop is front-end only, which is used to tracking record's lifecycle
         recordStatus: RecordStatus.UNINITIALIZED

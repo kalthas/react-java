@@ -142,7 +142,7 @@ class Tree extends PureComponent {
 }
 
 Tree.propTypes = {
-    roots: PropTypes.array,
+    roots: PropTypes.object,
     defaultExpand: PropTypes.bool,
     onLeafClick: PropTypes.func
 };

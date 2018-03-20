@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import ApplicationRecord, { ApplicationProps} from "./records/Application";
 import PerspectiveRecord, { PerspectiveProps } from "./records/Perspective";
 import ViewGroupRecord, { ViewGroupProps } from "./records/ViewGroup";
@@ -9,6 +10,7 @@ import FormRecord, {FormProps} from "./records/Form";
 import FieldRecord, {FieldProps, FieldType} from "./records/Field";
 import ButtonRecord, {ButtonProps} from "./records/Button";
 import EventRecord from "./records/Event";
+import {EMPTY_LIST} from "../constants/Pool";
 
 const Meta = [
     [ApplicationRecord, ApplicationProps],
@@ -98,6 +100,24 @@ const fromJS = (json, addRecord, forNormalize=false) => {
     const meta = TypeMetaMap[json && json.widgetType];
     if (meta) {
         const [Record, Props] = meta;
+        const hasEvents = Props.hasOwnProperty("events");
+        if (hasEvents && isNonEmptyArray(json.events)) {
+            const allEvents = json.events.reduce((evtMap, event) => {
+                const fieldName = event.field || json.name;
+                const perFieldEvents = evtMap.get(fieldName) || [];
+                perFieldEvents.push(event);
+                evtMap.set(fieldName, perFieldEvents);
+                return evtMap;
+            }, new Map());
+            json.events = (allEvents.get(json.name) || EMPTY_LIST).map(event => new EventRecord(event));
+            if (json.allContents) {
+                json.allContents.forEach(content => {
+                    if (allEvents.has(content.name)) {
+                        content.events = new List(allEvents.get(content.name));
+                    }
+                });
+            }
+        }
         const isContainer = Props.hasOwnProperty("allContents");
         if (isContainer && isNonEmptyArray(json.allContents)) {
             for (let i=0; i<json.allContents.length; i++) {
@@ -111,9 +131,8 @@ const fromJS = (json, addRecord, forNormalize=false) => {
                 }
             }
         }
-        const hasEvents = Props.hasOwnProperty("events");
-        if (hasEvents && isNonEmptyArray(json.events)) {
-            json.events = json.events.map(event => new EventRecord(event));
+        if (Array.isArray(json.allContents)) {
+            json.allContents = new List(json.allContents);
         }
         json.recordStatus = RecordStatus.INITIALIZED;
         return new Record(json);

@@ -23,11 +23,11 @@ class View extends PureComponent {
     }
 
     render() {
-        const { isAppLoaded, view, classes } = this.props;
+        const { isAppLoaded, view, dispatch } = this.props;
         let result;
         if (view && isAppLoaded) {
             if (isContentsLoaded(view)) {
-                result = (view.allContents || EMPTY_LIST).map(createWidget);
+                result = (view.allContents || EMPTY_LIST).map(content => createWidget(content, {dispatch}));
             } else {
                 result = <LoadingIndicator />
             }
@@ -51,7 +51,7 @@ const mapStateToProps = (state, props) => ({
     view: getView(state, props)
 });
 const mapDispatchToProps = (dispatch) => ({
-    // ?
+    dispatch: dispatch
 });
 
 export default withStyles(styles)(connect(

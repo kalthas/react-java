@@ -39,7 +39,7 @@ class Form extends PureComponent {
     }
 
     render() {
-        const { record, classes } = this.props;
+        const { record, classes, dispatch } = this.props;
         const buttons = [];
         const fields = [];
         (record.allContents || EMPTY_LIST).forEach(content => {
@@ -52,8 +52,8 @@ class Form extends PureComponent {
         let result;
         const createWithStyle = (content) => createWidget(content, this.buttonClass);
         if (isContentsLoaded(record)) {
-            result = fields.map(createWidget).concat([
-                <div className={classes.buttons}>
+            result = fields.map(content => createWidget(content, {dispatch})).concat([
+                <div key='buttons' className={classes.buttons}>
                     { buttons.map(createWithStyle) }
                 </div>
             ]);

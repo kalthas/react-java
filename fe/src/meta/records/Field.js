@@ -12,6 +12,7 @@ const FieldProps = Object.assign(
     WidgetProps,
     {
         type: FieldType.TEXT,
+        value: null,
         valueType: "",
         widgetType: FIELD
     }

@@ -6,8 +6,7 @@ const WidgetContainerProps = Object.assign(
     WidgetProps,
     {
         contentsLoaded: false,
-        allContents: new List(),
-        events: null
+        allContents: new List()
     }
 );
 

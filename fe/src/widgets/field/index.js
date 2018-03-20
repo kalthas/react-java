@@ -10,7 +10,7 @@ const TYPE_FIELD_MAPPING = Immutable.fromJS({
 
 const Field = (props) => {
     const FieldClass = TYPE_FIELD_MAPPING.get(props.record.type);
-    return <FieldClass record={props.record} />
+    return <FieldClass {...props} />
 };
 
 export default Field;
