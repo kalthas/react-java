@@ -91,11 +91,19 @@ export class WsClient {
     }
 
     load(uipath) {
-        this.sendMessage(undefined, MessageTypes.LOAD, uipath);
+        this.sendMessage(undefined, MessageTypes.LOAD, {uipath});
     }
 
     sendMessage (id, type, payload) {
         this.sendMessageRaw(this.buildMessage(id, type, payload));
+    }
+
+    updatesAndEvent(updates, event) {
+        this.sendMessage(undefined, MessageTypes.SYNC_EVENT, {updates, event});
+    }
+
+    fireEvent(uipath, content) {
+        this.sendMessage(undefined, MessageTypes.EVENT, {uipath, content})
     }
 
     sendMessageRaw (message) {

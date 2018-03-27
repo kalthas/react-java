@@ -10,8 +10,8 @@ const viewsReducer = (state = new ViewsRecord(), action) => {
             } else {
                 return state;
             }
-        case ActionTypes.UI_INPUT:
-            return state.uiInput(action.payload);
+        case ActionTypes.UPDATE:
+            return state.mutateProp(action.payload);
         default:
             return state;
     }

@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 
 import {EMPTY_LIST} from "../constants/Pool";
 import {EventType} from "../meta/records/Event";
-import metaStore from '../meta/MetaStore';
+import {uiEvent} from "../meta/action";
 
 class EventsAware extends PureComponent {
 
@@ -17,7 +17,10 @@ class EventsAware extends PureComponent {
     handleClick = () => {
         const event = this.events.get(EventType.ONCLICK);
         if (event) {
-            metaStore.fireEvent(this.props.record.uipath, event);
+            this.props.dispatch(uiEvent({
+                uipath: this.props.record.uipath,
+                event
+            }));
         }
     }
 

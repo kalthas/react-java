@@ -25,10 +25,7 @@ const styles = theme => ({
             padding: `${theme.spacing.unit}px ${theme.spacing.unit * 1.5}px`,
         },
         alignSelf: 'flex-end'
-    },
-    button: {
-        margin: `0 ${theme.spacing.unit / 2}px`,
-    },
+    }
 });
 class Form extends PureComponent {
 
@@ -50,11 +47,11 @@ class Form extends PureComponent {
             }
         });
         let result;
-        const createWithStyle = (content) => createWidget(content, this.buttonClass);
+        const createWithDispatch = content => createWidget(content, {dispatch});
         if (isContentsLoaded(record)) {
-            result = fields.map(content => createWidget(content, {dispatch})).concat([
+            result = fields.map(createWithDispatch).concat([
                 <div key='buttons' className={classes.buttons}>
-                    { buttons.map(createWithStyle) }
+                    { buttons.map(createWithDispatch) }
                 </div>
             ]);
         } else {

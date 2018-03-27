@@ -8,7 +8,9 @@ public class SignInFormHandler extends AbstractEventsHandler {
 
     @UIEvent(field = "submit", type = EventType.ONCLICK)
     public void onSubmit(SignInForm form) {
-
+        System.out.println("form.submit.ONCLICK");
+        System.out.println("\t- account: " + form.account.getValue());
+        System.out.println("\t- password: " + form.password.getValue());
     }
 
 }

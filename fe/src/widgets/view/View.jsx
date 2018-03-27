@@ -16,10 +16,18 @@ const styles = theme => ({
 });
 class View extends PureComponent {
 
-    componentWillReceiveProps(nextProps, nextContext) {
+    ensureMeta = (nextProps) => {
         if (nextProps.isAppLoaded && !isContentsLoaded(nextProps.view)) {
             MetaStore.load(nextProps.view.uipath);
         }
+    };
+
+    componentWillMount() {
+        this.ensureMeta(this.props);
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.ensureMeta(nextProps);
     }
 
     render() {

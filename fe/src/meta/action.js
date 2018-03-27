@@ -2,8 +2,12 @@ import fromJS from "./index";
 
 class ActionTypes {
 
+    /*
+     * actions recognized by both front-end & back-end
+     */
     static ADD = "ADD";
-    static UI_INPUT = "UI_INPUT";
+    static UPDATE = "UPDATE";
+    static EVENT = "EVENT";
 
 }
 
@@ -12,8 +16,17 @@ const addRecord = (record) => ({
     record
 });
 
-const uiInput = (payload) => ({
-    type: ActionTypes.UI_INPUT,
+const uiInput = (uipath, propName, newValue) => ({
+    type: ActionTypes.UPDATE,
+    payload: {
+        uipath,
+        propName,
+        value: newValue
+    }
+});
+
+const uiEvent = (payload) => ({
+    type: ActionTypes.EVENT,
     payload
 });
 
@@ -24,8 +37,19 @@ const makeAddRecord = (recordJson) => {
     }
 };
 
+const isMutationAction = (action) => (
+    action.type && action.type === ActionTypes.UPDATE
+);
+
+const isEventAction = (action) => (
+    action.type && action.type === ActionTypes.EVENT
+);
+
 export {
     ActionTypes,
     makeAddRecord,
-    uiInput
+    uiInput,
+    uiEvent,
+    isEventAction,
+    isMutationAction
 }

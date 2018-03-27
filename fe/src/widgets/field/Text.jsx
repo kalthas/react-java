@@ -7,10 +7,11 @@ class Text extends PureComponent {
 
     handleChange = (event) => {
         const newValue = event.target.value;
-        this.props.dispatch(uiInput({
-            uipath: this.props.record.uipath,
+        this.props.dispatch(uiInput(
+            this.props.record.uipath,
+            'value',
             newValue
-        }));
+        ));
     };
 
     render() {

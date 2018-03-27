@@ -84,6 +84,11 @@ public class DefaultWidget implements Widget {
     }
 
     @Override
+    public void mutateProp(String propName, Object value) {
+        // child dependent
+    }
+
+    @Override
     public String key() {
         return name + container.getClass();
     }

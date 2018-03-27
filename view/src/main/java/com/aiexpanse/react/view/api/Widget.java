@@ -35,5 +35,6 @@ public interface Widget extends IdentifiedBy<String> {
 
     WidgetContainer getContainer();
     void setContainer(WidgetContainer widgetContainer);
+    void mutateProp(String propName, Object value);
 
 }

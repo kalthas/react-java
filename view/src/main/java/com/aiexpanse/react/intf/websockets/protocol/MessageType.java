@@ -40,6 +40,7 @@ public enum MessageType {
     LOAD, // Client -> Server
     CONTENT, // Server -> Client
     EVENT, //  Client -> Server
+    SYNC_EVENT, //  Client -> Server
     ERROR;  //  Server -> Client
 
 }

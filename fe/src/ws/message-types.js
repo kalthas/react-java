@@ -7,5 +7,6 @@ export default class MessageType {
     static LOAD = "LOAD"; // Client -> Server
     static CONTENT = "CONTENT"; // Server -> Client
     static EVENT = "EVENT"; //  Client -> Server
+    static SYNC_EVENT = "SYNC_EVENT"; //  Client -> Server
     static ERROR = "ERROR";  //  Server -> Client
 }

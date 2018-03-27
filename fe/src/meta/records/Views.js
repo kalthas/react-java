@@ -26,12 +26,12 @@ class ViewsRecord extends Record({
         return this.set('views', this.views.set(record.uipath, record)).set('viewIds', newViewIds);
     }
 
-    uiInput(payload) {
-        const { uipath, newValue } = payload;
+    mutateProp(payload) {
+        const { uipath, value : newValue } = payload;
         const viewId = this.viewIds.find((id) => uipath.startsWith(id));
         const relativePath = uipath.substr(viewId.length+1).split('/');
         const view = this.views.get(viewId);
-        const pattern = findUpdatePattern(view, relativePath).concat('value');
+        const pattern = findUpdatePattern(view, relativePath).concat(payload.propName);
         return this.set('views', this.views.set(viewId, view.setIn(pattern, newValue)));
     }
 

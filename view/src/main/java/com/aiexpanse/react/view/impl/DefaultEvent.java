@@ -56,6 +56,7 @@ public class DefaultEvent implements Event {
 
     @Override
     public void handle() {
+        eventHandler.handle(widgetContainer);
     }
 
 }

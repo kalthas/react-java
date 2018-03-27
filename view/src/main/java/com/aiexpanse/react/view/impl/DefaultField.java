@@ -47,4 +47,11 @@ public class DefaultField<T> extends DefaultWidget implements Field<T> {
         return WidgetType.FIELD;
     }
 
+    @Override
+    public void mutateProp(String propName, Object value) {
+        if (propName.equals("value")) {
+            setValue((T)value);
+        }
+    }
+
 }
